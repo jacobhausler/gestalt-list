@@ -6,7 +6,8 @@ build:
     - NODE_ENV=test
   commands:
     - export GIT_SSL_NO_VERIFY=1
-    - npm install --loglevel=error
+    - echo "The next command might download for a while in silence."
+    - npm install --depth 0
     - npm run test
     - echo "Tests Have Passed!"
 notify:
