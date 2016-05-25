@@ -1,0 +1,17 @@
+clone:
+  skip_verify: true
+build:
+  image: node:argon
+  environment:
+    - NODE_ENV=test
+  commands:
+    - export GIT_SSL_NO_VERIFY=1
+    - npm install
+    - npm run test
+    - echo "Tests Have Passed!"
+notify:
+  hipchat:
+    auth_token: xxxxxxxxxxxxxxx
+    room_id_or_name: 1234567
+    notify: true
+    from: drone
