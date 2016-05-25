@@ -4,10 +4,10 @@
   "description": "A minimal Node boilerplate built with ES6 + Webpack",
   "main": "dist/bundle.js",
   "scripts": {
-    "start": "node dist/bundle.js",
+    "start": "node dist/index.js",
     "build": "webpack",
     "dev": "nodemon --watch ./ --exec 'npm run build && npm start'",
-    "deploy": "npm run build"
+    "deploy": "NODE_ENV=production npm run build"
   },
   "repository": {
     "type": "git",

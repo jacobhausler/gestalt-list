@@ -6,12 +6,8 @@ var fs = require('fs');
 
 var nodeModules = {};
 fs.readdirSync('node_modules')
-  .filter(function(x) {
-    return ['.bin'].indexOf(x) === -1;
-  })
-  .forEach(function(mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
+  .filter(x => ['.bin'].indexOf(x) === -1)
+  .forEach(mod => nodeModules[mod] = 'commonjs ' + mod);
 
 const __src = path.join(__dirname, 'src');
 const __dist = path.join(__dirname, 'dist');
@@ -32,24 +28,16 @@ const globals = {
   __BASENAME__: JSON.stringify(process.env.BASENAME || '')
 }
 
-module.exports = {
-  devtool: 'sourcemap',
+const config = {
   entry: path.join(__src, 'index.js'),
   target: 'node',
   output: {
     path: __dist,
-    filename: 'bundle.js'
+    filename: 'index.js'
   },
   externals: nodeModules,
   plugins: [
-    new webpack.DefinePlugin(globals),
-    new webpack.BannerPlugin(
-      'require("source-map-support").install();',
-      {
-        raw: true,
-        entryOnly: false
-      }
-    )
+    new webpack.DefinePlugin(globals)
   ],
   module: {
     preLoaders: [
@@ -75,3 +63,18 @@ module.exports = {
   },
   resolveLoader: { fallback: __node_modules }
 };
+
+if (env === 'development') {
+  config.devtool = 'sourcemap';
+  config.plugins.push(
+    new webpack.BannerPlugin(
+      'require("source-map-support").install();',
+      {
+        raw: true,
+        entryOnly: false
+      }
+    )
+  );
+}
+
+module.exports = config;
