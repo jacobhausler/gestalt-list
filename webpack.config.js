@@ -33,7 +33,7 @@ const globals = {
 }
 
 module.exports = {
-  devtool: 'eval',
+  devtool: 'sourcemap',
   entry: path.join(__src, 'index.js'),
   target: 'node',
   output: {
@@ -42,7 +42,14 @@ module.exports = {
   },
   externals: nodeModules,
   plugins: [
-    new webpack.DefinePlugin(globals)
+    new webpack.DefinePlugin(globals),
+    new webpack.BannerPlugin(
+      'require("source-map-support").install();',
+      {
+        raw: true,
+        entryOnly: false
+      }
+    )
   ],
   module: {
     preLoaders: [
