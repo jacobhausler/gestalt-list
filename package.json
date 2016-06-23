@@ -8,9 +8,9 @@
     "prebuild": "npm run test && npm run build:clean",
     "build:clean": "rimraf dist/*",
     "build": "webpack",
-    "test": "mocha-webpack src/**/*.test.js",
+    "test": "mocha-webpack 'src/tests/**/test.js'",
     "test:watch": "npm run test -- --watch",
-    "dev": "nodemon --watch ./ --exec 'webpack && npm start'",
+    "dev": "nodemon",
     "deploy": "better-npm-run deploy"
   },
   "betterScripts": {
@@ -36,7 +36,8 @@
   "author": "Tyler Martinez",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "lodash": "^4.13.1"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",

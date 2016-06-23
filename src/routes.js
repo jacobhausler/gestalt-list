@@ -1,5 +1,14 @@
+import { partial } from 'lodash';
 import { hello } from 'modules';
 
-export default app => {
-  app.use('/', hello);
+const routesConfig = [
+  { path: '/', handler: hello },
+];
+
+export const bindRoutes = (config, app) => {
+  config.forEach(({ method = 'use', path, handler }) => (
+    app[method](path, handler)
+  ));
 };
+
+export default partial(bindRoutes, routesConfig);

@@ -3,13 +3,15 @@ import { spy } from 'sinon';
 import hello from 'modules/hello';
 
 describe('hello', () => {
-  it('returns "Hello world!" or request text', () => {
+  it('returns "Hello world!" when request is blank', () => {
     const res = { send: spy() };
 
     hello({}, res);
     expect(res.send).to.have.been.calledWith('Hello World!');
+  });
 
-    res.send.reset();
+  it('returns request text when present', () => {
+    const res = { send: spy() };
 
     hello({ text: 'test' }, res);
     expect(res.send).to.have.been.calledWith('test');

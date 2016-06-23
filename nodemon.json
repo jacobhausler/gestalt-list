@@ -1,5 +1,20 @@
 {
   "verbose": false,
-  "ignore": ["dist", "node_modules"],
+  "watch": [
+    "src",
+    "webpack.config.js",
+    "webpack.test.config.js",
+    ".babelrc",
+    ".eslintrc",
+    ".test.eslintrc",
+    "mocha-webpack.opts"
+  ],
+  "exec": "webpack && npm start",
+  "ignore": [
+    "dist/",
+    "node_modules/",
+    ".tmp/",
+    "**/test.js"
+  ],
   "ext": "js, json"
 }
