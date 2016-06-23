@@ -2,7 +2,8 @@ import { partial } from 'lodash';
 import { hello } from 'modules';
 
 const routesConfig = [
-  { path: '/', handler: hello },
+  { path: '/', method: 'get', handler: hello.get },
+  { path: '/', method: 'post', handler: hello.post },
 ];
 
 export const bindRoutes = (config, app) => {

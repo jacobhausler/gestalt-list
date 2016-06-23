@@ -1,19 +1,30 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import hello from 'modules/hello';
+import * as hello from 'modules/hello';
 
 describe('hello', () => {
-  it('returns "Hello world!" when request is blank', () => {
-    const res = { send: spy() };
+  describe('get', () => {
+    it('returns "Hello World!"', () => {
+      const res = { send: spy() };
 
-    hello({}, res);
-    expect(res.send).to.have.been.calledWith('Hello World!');
+      hello.get({}, res);
+      expect(res.send).to.have.been.calledWith('Hello World!');
+    });
   });
 
-  it('returns request text when present', () => {
-    const res = { send: spy() };
+  describe('post', () => {
+    it('returns request.text if present', () => {
+      const res = { send: spy() };
 
-    hello({ text: 'test' }, res);
-    expect(res.send).to.have.been.calledWith('test');
+      hello.post({ text: 'test' }, res);
+      expect(res.send).to.have.been.calledWith('test');
+    });
+
+    it('returns "Hello World!" if request.text is blank', () => {
+      const res = { send: spy() };
+
+      hello.get({}, res);
+      expect(res.send).to.have.been.calledWith('Hello World!');
+    });
   });
 });

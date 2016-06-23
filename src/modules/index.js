@@ -1,1 +1,1 @@
-export hello from './hello';
+export * as hello from './hello';
