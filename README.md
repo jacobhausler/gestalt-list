@@ -10,6 +10,22 @@ npm install
 npm run dev
 ```
 
+## Testing
+
+Tests live alongside their sources as `test.js` files.
+
+#### Single run
+
+```
+npm run test
+```
+
+#### Watch
+
+```
+npm run test:watch
+```
+
 ## Deployment
 
 ```
