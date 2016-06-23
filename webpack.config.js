@@ -1,8 +1,7 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const argv = require('yargs').argv;
-
-var fs = require('fs');
 
 var nodeModules = {};
 fs.readdirSync('node_modules')
