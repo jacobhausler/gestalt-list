@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import hello from './index.js';
+import hello from 'modules/hello';
 
 describe('hello', () => {
   it('returns "Hello world!" or request text', () => {

@@ -8,7 +8,7 @@
     "prebuild": "npm run test && npm run build:clean",
     "build:clean": "rimraf dist/*",
     "build": "webpack",
-    "test": "mocha-webpack 'src/**/test.js'",
+    "test": "mocha-webpack src/**/*.test.js",
     "test:watch": "npm run test -- --watch",
     "dev": "nodemon --watch ./ --exec 'webpack && npm start'",
     "deploy": "better-npm-run deploy"
