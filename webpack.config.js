@@ -2,11 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const argv = require('yargs').argv;
-
-var nodeModules = {};
-fs.readdirSync('node_modules')
-  .filter(x => ['.bin'].indexOf(x) === -1)
-  .forEach(mod => nodeModules[mod] = 'commonjs ' + mod);
+const nodeExternals = require('webpack-node-externals');
 
 const __src = path.join(__dirname, 'src');
 const __dist = path.join(__dirname, 'dist');
@@ -32,7 +28,7 @@ const config = {
     path: __dist,
     filename: 'index.js'
   },
-  externals: nodeModules,
+  externals: [nodeExternals()],
   plugins: [
     new webpack.DefinePlugin(globals)
   ],
@@ -63,7 +59,7 @@ const config = {
 };
 
 if (env === 'development') {
-  config.devtool = 'sourcemap';
+  config.devtool = 'inline-sourcemap';
   config.plugins.push(
     new webpack.BannerPlugin(
       'require("source-map-support").install();',
