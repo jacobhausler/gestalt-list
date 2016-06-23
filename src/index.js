@@ -2,9 +2,9 @@
 import express from 'express';
 const app = express();
 
-// Register modules
-import { hello } from 'modules';
-app.use('/', hello);
+// Register routes
+import routes from 'routes';
+routes(app);
 
-// Listen on port 3000
+// Start server
 app.listen(__DEV__ ? 3000 : undefined);

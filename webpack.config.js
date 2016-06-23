@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const argv = require('yargs').argv;
 const nodeExternals = require('webpack-node-externals');
@@ -19,7 +18,7 @@ const globals = {
   __PROD__: env === 'production',
   __TEST__: env === 'test',
   __DEBUG__: env === 'development' && !argv.no_debug,
-}
+};
 
 const config = {
   entry: path.join(__src, 'index.js'),
@@ -53,6 +52,7 @@ const config = {
     alias: {
       src: __src,
       modules: path.join(__src, 'modules'),
+      routes: path.join(__src, 'routes')
     }
   },
   resolveLoader: { fallback: __node_modules }

@@ -3,7 +3,7 @@ import { spy } from 'sinon';
 import hello from './index.js';
 
 describe('hello', () => {
-  it('returns "Hello world!" for every request', () => {
+  it('returns "Hello world!" or request text', () => {
     const res = { send: spy() };
 
     hello({}, res);
@@ -11,7 +11,7 @@ describe('hello', () => {
 
     res.send.reset();
 
-    hello({ test: 'test' }, res);
-    expect(res.send).to.have.been.calledWith('Hello World!');
+    hello({ text: 'test' }, res);
+    expect(res.send).to.have.been.calledWith('test');
   });
 });

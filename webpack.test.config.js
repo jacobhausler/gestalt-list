@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const nodeExternals = require('webpack-node-externals');
 
 const __src = path.join(__dirname, 'src');
@@ -40,6 +39,7 @@ module.exports = {
     alias: {
       src: __src,
       modules: path.join(__src, 'modules'),
+      routes: path.join(__src, 'routes'),
       chai: chai
     }
   },

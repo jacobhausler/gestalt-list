@@ -1,1 +1,1 @@
-export default (req, res) => res.send('Hello World!');
+export default ({ text = 'Hello World!' }, res) => res.send(text);
