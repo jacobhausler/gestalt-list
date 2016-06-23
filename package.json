@@ -9,6 +9,7 @@
     "build:clean": "rimraf dist/*",
     "build": "webpack",
     "test": "mocha-webpack --webpack-config webpack.test.config.js \"src/**/test.js\"",
+    "test:watch": "npm run test -- --watch",
     "dev": "nodemon --watch ./ --exec 'webpack && npm start'",
     "deploy": "better-npm-run deploy"
   },
