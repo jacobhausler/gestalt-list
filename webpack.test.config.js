@@ -5,6 +5,11 @@ const nodeExternals = require('webpack-node-externals');
 const __src = path.join(__dirname, 'src');
 const __node_modules = path.join(__dirname, 'node_modules');
 
+const chai = require('chai');
+const sinonChai = require('sinon-chai');
+chai.should();
+chai.use(sinonChai);
+
 module.exports = {
   devtool: 'cheap-module-source-map',
   target: 'node',
@@ -35,6 +40,7 @@ module.exports = {
     alias: {
       src: __src,
       modules: path.join(__src, 'modules'),
+      chai: chai
     }
   },
   resolveLoader: { fallback: __node_modules },

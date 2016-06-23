@@ -7,11 +7,11 @@ describe('hello', () => {
     const res = { send: spy() };
 
     hello({}, res);
-    expect(res.send.calledWith('Hello World!')).to.equal(true);
+    expect(res.send).to.have.been.calledWith('Hello World!');
 
     res.send.reset();
 
     hello({ test: 'test' }, res);
-    expect(res.send.calledWith('Hello World!')).to.equal(true);
+    expect(res.send).to.have.been.calledWith('Hello World!');
   });
 });
