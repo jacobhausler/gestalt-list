@@ -59,7 +59,7 @@ const config = {
 };
 
 if (env === 'development') {
-  config.devtool = 'inline-sourcemap';
+  config.devtool = 'cheap-module-source-map';
   config.plugins.push(
     new webpack.BannerPlugin(
       'require("source-map-support").install();',

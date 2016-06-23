@@ -6,8 +6,13 @@ const __src = path.join(__dirname, 'src');
 const __node_modules = path.join(__dirname, 'node_modules');
 
 module.exports = {
-  devtool: 'inline-sourcemap',
+  devtool: 'cheap-module-source-map',
   target: 'node',
+  output: {
+    // sourcemap support for IntelliJ/Webstorm
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
+  },
   externals: [nodeExternals()],
   module: {
     preLoaders: [
