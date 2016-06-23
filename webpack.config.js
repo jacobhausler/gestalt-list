@@ -24,8 +24,6 @@ const globals = {
   __PROD__: env === 'production',
   __TEST__: env === 'test',
   __DEBUG__: env === 'development' && !argv.no_debug,
-  __DEBUG_NEW_WINDOW__: !!argv.nw,
-  __BASENAME__: JSON.stringify(process.env.BASENAME || '')
 }
 
 const config = {
@@ -58,7 +56,8 @@ const config = {
   resolve: {
     fallback: __node_modules,
     alias: {
-      src: __src
+      src: __src,
+      modules: path.join(__src, 'modules'),
     }
   },
   resolveLoader: { fallback: __node_modules }

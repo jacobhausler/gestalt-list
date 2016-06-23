@@ -1,7 +1,10 @@
+// Init app
 import express from 'express';
-
 const app = express();
 
-app.get('/', (req, res) => res.send('Hello World!'));
+// Register modules
+import { hello } from 'modules';
+app.use('/', hello);
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+// Listen on port 3000
+app.listen(__DEV__ ? 3000 : undefined);
