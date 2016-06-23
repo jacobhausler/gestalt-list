@@ -14,6 +14,8 @@ npm run dev
 
 Tests live alongside their sources as `test.js` files.
 
+You will need to familiarize yourself with [mocha](https://mochajs.org/), [chai](http://chaijs.com/), [sinon](http://sinonjs.org/), and [sinon-chai](https://github.com/domenic/sinon-chai).
+
 #### Single run
 
 ```
