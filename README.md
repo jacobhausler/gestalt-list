@@ -9,11 +9,23 @@ git clone https://github.phytel.com/tmartinez/node-boilerplate.git .
 npm install
 ```
 
+Navigate to `localhost:3000` and you should see "Hello World!".
+
 ## Development
 
 ```
 npm run dev
 ```
+
+## Type checking
+
+Type checking is performed by [Flow](https://flowtype.org/) during the build step. To opt in a file add a
+
+```javascript
+// @flow
+```
+
+comment at the top of the file and it will be checked.
 
 ## Testing
 
