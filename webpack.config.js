@@ -49,14 +49,12 @@ const config = {
     ]
   },
   resolve: {
-    fallback: __node_modules,
     alias: {
       src: __src,
       modules: path.join(__src, 'modules'),
       routes: path.join(__src, 'routes')
     }
-  },
-  resolveLoader: { fallback: __node_modules }
+  }
 };
 
 if (env === 'development') {

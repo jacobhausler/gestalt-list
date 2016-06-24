@@ -39,7 +39,6 @@ module.exports = {
     ]
   },
   resolve: {
-    fallback: __node_modules,
     alias: {
       src: __src,
       modules: path.join(__src, 'modules'),
@@ -47,7 +46,6 @@ module.exports = {
       chai: chai
     }
   },
-  resolveLoader: { fallback: __node_modules },
   eslint: {
     configFile: path.join(__dirname, '.test.eslintrc')
   }
