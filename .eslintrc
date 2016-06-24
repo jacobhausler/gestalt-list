@@ -7,7 +7,6 @@
     "node" : true
   },
   "globals": {
-    "Action": false,
     "__DEV__": false,
     "__PROD__": false,
     "__DEBUG__": false
