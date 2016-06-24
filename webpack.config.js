@@ -31,7 +31,6 @@ const config = {
   externals: [nodeExternals()],
   plugins: [
     new webpack.DefinePlugin(globals),
-    new FlowStatusWebpackPlugin(),
   ],
   module: {
     preLoaders: [
@@ -71,6 +70,10 @@ if (env === 'development') {
       }
     )
   );
+}
+
+if (env === 'development' && !argv.no_type_check) {
+  config.plugins.push(new FlowStatusWebpackPlugin());
 }
 
 module.exports = config;

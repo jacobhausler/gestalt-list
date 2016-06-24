@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "prebuild": "npm run test && npm run build:clean",
     "build:clean": "rimraf dist/*",
-    "build": "webpack",
+    "build": "webpack --no_type_check",
     "test": "mocha-webpack 'src/tests/**/test.js'",
     "test:watch": "npm run test -- --watch",
     "dev": "nodemon",
