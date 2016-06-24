@@ -33,6 +33,11 @@ Test files must be named `test.js`. Place them in the appropriate subdirectories
 
 You will need to familiarize yourself with [mocha](https://mochajs.org/), [chai](http://chaijs.com/), [sinon](http://sinonjs.org/), and [sinon-chai](https://github.com/domenic/sinon-chai).
 
+## CI Setup
+
+Update your drone.yml file to install dependencies and run your tests typically - `npm run test`.
+Visit http://192.168.111.92 , login with your github enterprise account, find your repo under the `Available Repositories` tab and activate!  
+
 #### Single run
 
 ```
