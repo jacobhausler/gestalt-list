@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { spy } from 'sinon';
 import { bindRoutes } from 'routes';
 
@@ -16,8 +15,8 @@ describe('routes', () => {
     };
 
     bindRoutes(config, app);
-    expect(app.get).to.have.been.calledWith('/first', firstHandler);
-    expect(app.post).to.have.been.calledWith('/second', secondHandler);
+    app.get.should.have.been.calledWith('/first', firstHandler);
+    app.post.should.have.been.calledWith('/second', secondHandler);
   });
 
   it('binds route with "use" method if config.method is undefined', () => {
@@ -26,6 +25,6 @@ describe('routes', () => {
     const app = { use: spy() };
 
     bindRoutes(config, app);
-    expect(app.use).to.have.been.calledWith('/test', handler);
+    app.use.should.have.been.calledWith('/test', handler);
   });
 });

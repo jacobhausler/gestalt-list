@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { spy } from 'sinon';
 import * as hello from 'modules/hello';
 
@@ -8,7 +7,7 @@ describe('hello', () => {
       const res = { send: spy() };
 
       hello.get({}, res);
-      expect(res.send).to.have.been.calledWith('Hello World!');
+      res.send.should.have.been.calledWith('Hello World!');
     });
   });
 
@@ -17,14 +16,14 @@ describe('hello', () => {
       const res = { send: spy() };
 
       hello.post({ text: 'test' }, res);
-      expect(res.send).to.have.been.calledWith('test');
+      res.send.should.have.been.calledWith('test');
     });
 
     it('returns "Hello World!" if request.text is blank', () => {
       const res = { send: spy() };
 
       hello.get({}, res);
-      expect(res.send).to.have.been.calledWith('Hello World!');
+      res.send.should.have.been.calledWith('Hello World!');
     });
   });
 });

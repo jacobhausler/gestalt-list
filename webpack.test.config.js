@@ -26,8 +26,8 @@ module.exports = {
     preLoaders: [
       {
         test: /\.js$/,
-        include: __src,
-        loader: 'eslint'
+        loader: 'eslint',
+        include: __src
       }
     ],
     loaders: [
@@ -42,8 +42,7 @@ module.exports = {
     alias: {
       src: __src,
       modules: path.join(__src, 'modules'),
-      routes: path.join(__src, 'routes'),
-      chai: chai
+      routes: path.join(__src, 'routes')
     }
   },
   eslint: {

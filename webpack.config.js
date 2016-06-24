@@ -36,15 +36,15 @@ const config = {
     preLoaders: [
       {
         test: /\.js$/,
-        include: __src,
-        loader: 'eslint'
+        loader: 'eslint',
+        include: __src
       }
     ],
     loaders: [
       {
         test: /\.js$/,
         loader: 'babel',
-        include: __src,
+        include: __src
       }
     ]
   },
