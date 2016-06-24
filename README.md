@@ -29,7 +29,7 @@ comment at the top of the file and it will be checked.
 
 ## Testing
 
-Test files must be named `test.js`, place them in appropriate subdirectories of `src/tests`.
+Test files must be named `test.js`. Place them in the appropriate subdirectories of `src/tests`.
 
 You will need to familiarize yourself with [mocha](https://mochajs.org/), [chai](http://chaijs.com/), [sinon](http://sinonjs.org/), and [sinon-chai](https://github.com/domenic/sinon-chai).
 
