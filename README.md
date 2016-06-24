@@ -9,18 +9,18 @@ git clone https://github.phytel.com/tmartinez/node-boilerplate.git .
 npm install
 ```
 
-Navigate to `localhost:3000` and you should see "Hello World!".
-
 #### CI Setup
 
 Update your drone.yml file to install dependencies and run your tests - currently `npm run build`.
-Visit http://192.168.111.92 , login with your github enterprise account, find your repo under the `Available Repositories` tab and activate! 
+Visit http://192.168.111.92 , login with your github enterprise account, find your repo under the `Available Repositories` tab and activate!
 
 ## Development
 
 ```
 npm run dev
 ```
+
+Navigate to `localhost:3000` and you should see "Hello World!".
 
 ## Type checking
 
