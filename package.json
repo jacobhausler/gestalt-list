@@ -15,7 +15,7 @@
   },
   "betterScripts": {
     "deploy": {
-      "command": "npm run build:clean && npm run build",
+      "command": "npm run build:clean && npm run build && echo 'Project built but missing deploy instructions, check package.json'",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"

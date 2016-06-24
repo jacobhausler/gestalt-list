@@ -7,8 +7,8 @@ build:
   commands:
     - export GIT_SSL_NO_VERIFY=1
     - echo "The next command might download for a while in silence."
-    - npm install
-    - npm run build
+    - npm install --depth 0
+    - npm run test
     - echo "Project passed all specs and built corretly!"
 notify:
   hipchat:
