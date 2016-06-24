@@ -1,8 +1,9 @@
 {
   "presets": ["es2015", "stage-0"],
   plugins: [
-    'transform-runtime',
-    'transform-regenerator',
-    'transform-async-to-generator'
+    "transform-flow-strip-types",
+    "transform-runtime",
+    "transform-regenerator",
+    "transform-async-to-generator"
   ]
 }

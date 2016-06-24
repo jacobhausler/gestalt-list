@@ -1,3 +1,8 @@
-export const get = (req, res) => res.send('Hello World!');
+// @flow
 
-export const post = ({ text = 'Hello World!' }, res) => res.send(text);
+type reqType = { text: string };
+type resType = { send: Function };
+
+export const get = (req: reqType, res: resType) => res.send('Hello World!');
+
+export const post = ({ text = 'Hello World!' }: reqType, res: resType) => res.send(text);

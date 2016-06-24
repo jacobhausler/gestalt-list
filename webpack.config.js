@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const argv = require('yargs').argv;
 const nodeExternals = require('webpack-node-externals');
 
@@ -29,7 +30,8 @@ const config = {
   },
   externals: [nodeExternals()],
   plugins: [
-    new webpack.DefinePlugin(globals)
+    new webpack.DefinePlugin(globals),
+    new FlowStatusWebpackPlugin(),
   ],
   module: {
     preLoaders: [
