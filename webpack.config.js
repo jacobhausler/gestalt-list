@@ -31,33 +31,30 @@ const config = {
   externals: [nodeExternals()],
   plugins: [
     new webpack.DefinePlugin(globals),
-    new FlowStatusWebpackPlugin(),
   ],
   module: {
     preLoaders: [
       {
         test: /\.js$/,
-        include: __src,
-        loader: 'eslint'
+        loader: 'eslint',
+        include: __src
       }
     ],
     loaders: [
       {
         test: /\.js$/,
         loader: 'babel',
-        include: __src,
+        include: __src
       }
     ]
   },
   resolve: {
-    fallback: __node_modules,
     alias: {
       src: __src,
       modules: path.join(__src, 'modules'),
       routes: path.join(__src, 'routes')
     }
-  },
-  resolveLoader: { fallback: __node_modules }
+  }
 };
 
 if (env === 'development') {
@@ -71,6 +68,10 @@ if (env === 'development') {
       }
     )
   );
+}
+
+if (env === 'development' && !argv.no_type_check) {
+  config.plugins.push(new FlowStatusWebpackPlugin());
 }
 
 module.exports = config;
