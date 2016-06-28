@@ -46,6 +46,6 @@ module.exports = {
     }
   },
   eslint: {
-    configFile: path.join(__dirname, '.test.eslintrc')
-  }
+    configFile: path.join(__dirname, 'config/eslint/.test.rc')
+  },
 }

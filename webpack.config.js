@@ -54,7 +54,10 @@ const config = {
       modules: path.join(__src, 'modules'),
       routes: path.join(__src, 'routes')
     }
-  }
+  },
+  eslint: {
+    configFile: path.join(__dirname, 'config/eslint/.dev.rc')
+  },
 };
 
 if (env === 'development') {
