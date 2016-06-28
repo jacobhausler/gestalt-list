@@ -9,7 +9,7 @@
     ".test.eslintrc",
     "mocha-webpack.opts"
   ],
-  "exec": "webpack && npm start",
+  "exec": "webpack --config config/webpack/dev.js && npm start",
   "ignore": [
     "dist/",
     "node_modules/",

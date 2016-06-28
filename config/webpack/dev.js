@@ -4,9 +4,10 @@ const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const argv = require('yargs').argv;
 const nodeExternals = require('webpack-node-externals');
 
-const __src = path.join(__dirname, 'src');
-const __dist = path.join(__dirname, 'dist');
-const __node_modules = path.join(__dirname, 'node_modules');
+const __root = path.join(__dirname, '../../');
+const __src = path.join(__root, 'src');
+const __dist = path.join(__root, 'dist');
+const __node_modules = path.join(__root, 'node_modules');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -56,7 +57,7 @@ const config = {
     }
   },
   eslint: {
-    configFile: path.join(__dirname, 'config/eslint/.dev.rc')
+    configFile: path.join(__root, 'config/eslint/.dev.rc')
   },
 };
 

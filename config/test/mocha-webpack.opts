@@ -1,4 +1,4 @@
---webpack-config webpack.test.config.js
+--webpack-config config/webpack/test.js
 --recursive
 --require source-map-support/register
 --colors

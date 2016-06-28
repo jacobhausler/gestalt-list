@@ -2,8 +2,9 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 
-const __src = path.join(__dirname, 'src');
-const __node_modules = path.join(__dirname, 'node_modules');
+const __root = path.join(__dirname, '../../');
+const __src = path.join(__root, 'src');
+const __node_modules = path.join(__root, 'node_modules');
 
 const chai = require('chai');
 const sinonChai = require('sinon-chai');
@@ -46,6 +47,6 @@ module.exports = {
     }
   },
   eslint: {
-    configFile: path.join(__dirname, 'config/eslint/.test.rc')
+    configFile: path.join(__root, 'config/eslint/.test.rc')
   },
 }
