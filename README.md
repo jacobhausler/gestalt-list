@@ -1,5 +1,8 @@
 # Node Boilerplate
 
+[![Build Status](http://192.168.111.92/api/badges/tmartinez/node-boilerplate/status.svg)](http://192.168.111.92/tmartinez/node-boilerplate)
+
+
 ## Install
 
 From a blank directory:
