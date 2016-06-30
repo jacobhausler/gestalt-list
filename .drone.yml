@@ -7,7 +7,7 @@ build:
   commands:
     - export GIT_SSL_NO_VERIFY=1
     - echo "The next command might download for a while in silence."
-    - npm install --depth 0
+    - npm install --depth 0 --loglevel=error
     - npm run build
     - echo "Project passed all specs and built corretly!"
 notify:
