@@ -1,5 +1,6 @@
 # Node Boilerplate
 
+[![Build Status](https://travis-ci.org/slightlytyler/node-boilerplate.svg?branch=master)](https://travis-ci.org/slightlytyler/node-boilerplate)
 
 ## Install
 
