@@ -1,20 +1,18 @@
 # Node Boilerplate
 
-[![Build Status](http://192.168.111.92/api/badges/tmartinez/node-boilerplate/status.svg)](http://192.168.111.92/tmartinez/node-boilerplate)
-
 
 ## Install
 
 From a blank directory:
 
 ```
-git clone https://github.phytel.com/tmartinez/node-boilerplate.git .
+git clone git@github.com:slightlytyler/node-boilerplate.git .
 npm install
 ```
 
 #### CI Setup
 
-After making an inital commit visit the [dashboard](http://192.168.111.92), login with your github enterprise account, find your repo under the `Available Repositories` tab and activate! When commiting to master or a PR you should see a build in the dashboard as well as indicators on Github. Drone comes preconfigured but can be customized in the `drone.yml` file.
+Activate your repo on Travis and away you go!
 
 ## Development
 
