@@ -1,0 +1,61 @@
+type Session implements Node {
+  id: ID!
+  currentUser: User
+}
+
+type User implements Node {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  email: String! @hidden @index
+  passwordHash: String @hidden
+  firstName: String
+  lastName: String
+  fullName: String @virtual
+  profileImage(size: Int): String! @virtual
+  following: Boolean! @virtual
+  followedUsers: User @relationship(path: "=FOLLOWED=>")
+  followers: User @relationship(path: "<=FOLLOWED=")
+  posts: Post @relationship(path: "=AUTHORED=>")
+  followedFeed: Post @relationship(path: "=FOLLOWED=>User=AUTHORED=>")
+  locale: Location @relationship(path:"<-HOSTED-")
+  localFeed: Post@relationship(path:"<-HOSTED-Location=HOSTED=>User=AUTHORED=>")
+}
+
+type Post implements Node {
+  id: ID!
+  title: String! @index
+  text: String!
+  createdAt: Date!
+  updatedAt: Date!
+  author: User @relationship(path: "<-AUTHORED-")
+
+}
+
+type Location implements Node {
+  id:ID!
+  createdAt: Date!
+  name:String! @index @unique
+  users: User @relationship(path:"=HOSTED=>")
+  lists: List @relationship(path:"=OWNED=>")
+
+}
+
+type List implements Node {
+  id:ID!
+  createdAt: Date!
+  name: String! @index
+  locale: Location @relationship(path:"<-OWNED-")
+  categories: Category @relationship(path:"=LISTED=>")
+}
+
+type Category implements Node {
+  id:ID!
+  createdAt: Date!
+  name: String! @index
+  list: List @relationship(path:"<-LISTED-")
+
+}
+
+
+

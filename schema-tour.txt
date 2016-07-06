@@ -1,0 +1,258 @@
+ Some helpful queries to see stuff
+ Do these after npm start to verify stuff
+ -----------------------------
+
+//nobody
+query{
+  session{
+    id
+    currentUser{
+      id
+      fullName
+    }
+  }
+}
+
+//sign us up
+mutation{
+  signUp(input:{
+    clientMutationId:"signUp",
+    email:"jacob@hausler.io",
+    firstName:"jacob",
+    lastName:"hausler",
+  }){
+    session{
+      id
+      currentUser{
+        id
+        fullName
+      }
+    }
+  }
+}
+
+vv see how tyler is currentUser now? vv
+mutation{
+  signUp(input:{
+    clientMutationId:"signUp",
+    email:"slightlytyler@gmail.com",
+    firstName:"tyler",
+    lastName:"martinez",
+  }){
+    session{
+      id
+      currentUser{
+        id
+        fullName
+      }
+    }
+  }
+}
+
+mutation{
+  signOut(input:{
+    clientMutationId:"signout",
+  }){
+    session{
+      id
+      currentUser{
+        id
+        fullName
+      }
+    }
+  }
+}
+
+mutation{
+  signIn(input:{
+    clientMutationId:"signin",
+    email:"jacob@hausler.io"
+  }){
+    session{
+      id
+      currentUser{
+        id
+        fullName
+      }
+    }
+  }
+}
+
+//create posts; now we're flyin
+
+mutation{
+  createPost(input:{
+    clientMutationId:"createPost",
+    title: "mytest post"
+    text:"is it working?"
+  }){
+    user{
+      id
+      posts{
+        edges{
+          node{
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation{
+  createPost(input:{
+    clientMutationId:"createPost",
+    title: "mytest other post"
+    text:"i think its working"
+  }){
+    user{
+      id
+      posts{
+        edges{
+          node{
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation{
+  createPost(input:{
+    clientMutationId:"createPost",
+    title: "mytest 3rd post"
+    text:"i think its surely working"
+  }){
+    user{
+      id
+      posts{
+        edges{
+          node{
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+}
+
+//delete one
+
+mutation{
+  deletePost(input:{
+    clientMutationId:"deletePost",
+    postId:"[pick one]"
+  }){
+    user{
+      id
+      posts{
+        edges{
+          node{
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation{
+  followUser(input:{
+    clientMutationId:"followUser",
+  userID:"[tyler's id]",
+  }){
+    user{
+      id
+      fullName
+      following
+    }
+  }
+}
+
+mutation{
+  signIn(input:{
+    clientMutationId:"signin",
+    email:"slightlytyler@gmail.com"
+  }){
+    session{
+      id
+      currentUser{
+        id
+      }
+    }
+  }
+}
+
+mutation{
+  createPost(input:{
+    clientMutationId:"createPost",
+    title: "tyler's test post"
+    text:"look at tyler's post!"
+  }){
+    user{
+      id
+      posts{
+        edges{
+          node{
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation{
+  followUser(input:{
+    clientMutationId:"followUser",
+  userID:"[jacob's id]",
+  }){
+    user{
+      id
+      fullName
+      following
+    }
+  }
+}
+
+//money-query
+query{
+  session{
+    currentUser{
+      id
+      fullName
+      followedUsers{
+        edges{
+          node{
+            id
+            fullName
+          }
+        }
+      }
+      followedFeed{
+        edges{
+          node{
+            id
+            title
+            text
+          }
+        }
+      }
+      localFeed{
+        edges{
+          node{
+            id
+            title
+            text
+          }
+        }
+      }
+    }
+  }
+}

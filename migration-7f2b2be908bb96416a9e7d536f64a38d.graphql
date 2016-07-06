@@ -1,0 +1,82 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE TABLE users (
+  seq SERIAL NOT NULL UNIQUE,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at timestamp without time zone NOT NULL,
+  updated_at timestamp without time zone NOT NULL,
+  email text NOT NULL,
+  password_hash text,
+  first_name text,
+  last_name text,
+  hosted_by_location_id uuid
+);
+
+CREATE TABLE posts (
+  seq SERIAL NOT NULL UNIQUE,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  text text NOT NULL,
+  created_at timestamp without time zone NOT NULL,
+  updated_at timestamp without time zone NOT NULL,
+  authored_by_user_id uuid
+);
+
+CREATE TABLE locations (
+  seq SERIAL NOT NULL UNIQUE,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at timestamp without time zone NOT NULL,
+  name text NOT NULL UNIQUE
+);
+
+CREATE TABLE lists (
+  seq SERIAL NOT NULL UNIQUE,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at timestamp without time zone NOT NULL,
+  name text NOT NULL,
+  owned_by_location_id uuid
+);
+
+CREATE TABLE categories (
+  seq SERIAL NOT NULL UNIQUE,
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  created_at timestamp without time zone NOT NULL,
+  name text NOT NULL,
+  listed_by_list_id uuid
+);
+
+CREATE TABLE user_followed_users (
+  user_id uuid NOT NULL,
+  followed_user_id uuid NOT NULL,
+  UNIQUE (user_id, followed_user_id)
+);
+
+ALTER TABLE users ADD CONSTRAINT users_hosted_by_location_id_fkey FOREIGN KEY (hosted_by_location_id) REFERENCES locations (id) MATCH FULL;
+
+ALTER TABLE posts ADD CONSTRAINT posts_authored_by_user_id_fkey FOREIGN KEY (authored_by_user_id) REFERENCES users (id) MATCH FULL;
+
+ALTER TABLE lists ADD CONSTRAINT lists_owned_by_location_id_fkey FOREIGN KEY (owned_by_location_id) REFERENCES locations (id) MATCH FULL;
+
+ALTER TABLE categories ADD CONSTRAINT categories_listed_by_list_id_fkey FOREIGN KEY (listed_by_list_id) REFERENCES lists (id) MATCH FULL;
+
+ALTER TABLE user_followed_users ADD CONSTRAINT user_followed_users_user_id_fkey FOREIGN KEY (user_id) REFERENCES users (id) MATCH FULL;
+
+ALTER TABLE user_followed_users ADD CONSTRAINT user_followed_users_followed_user_id_fkey FOREIGN KEY (followed_user_id) REFERENCES users (id) MATCH FULL;
+
+CREATE INDEX ON users (email);
+
+CREATE INDEX ON users (hosted_by_location_id);
+
+CREATE INDEX ON posts (title);
+
+CREATE INDEX ON posts (authored_by_user_id);
+
+CREATE INDEX ON lists (name);
+
+CREATE INDEX ON lists (owned_by_location_id);
+
+CREATE INDEX ON categories (name);
+
+CREATE INDEX ON categories (listed_by_list_id);
+
+CREATE INDEX ON user_followed_users (followed_user_id);

@@ -12,6 +12,7 @@ const __node_modules = path.join(__root, 'node_modules');
 const env = process.env.NODE_ENV || 'development';
 
 const globals = {
+  __root: JSON.stringify(__root),
   'process.env': {
     'NODE_ENV': JSON.stringify(env)
   },
@@ -23,7 +24,7 @@ const globals = {
 };
 
 const config = {
-  entry: path.join(__src, 'index.js'),
+  entry: ['babel-polyfill', path.join(__src, 'index.js')],
   target: 'node',
   output: {
     path: __dist,
@@ -52,8 +53,9 @@ const config = {
   resolve: {
     alias: {
       src: __src,
+      config: path.join(__src, 'config'),
+      helpers: path.join(__src, 'helpers'),
       modules: path.join(__src, 'modules'),
-      routes: path.join(__src, 'routes')
     }
   },
   eslint: {
