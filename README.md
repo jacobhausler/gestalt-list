@@ -1,6 +1,6 @@
 # gestalt-list
 
-[![Build Status](https://travis-ci.org/slightlytyler/node-boilerplate.svg?branch=master)](https://travis-ci.org/slightlytyler/node-boilerplate)
+[![Build Status](https://travis-ci.org/jacobhausler/gestaltCLP2.svg?branch=master)](https://travis-ci.org/jacobhausler/gestaltCLP2)
 
 ## Install
 
