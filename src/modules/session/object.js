@@ -8,7 +8,7 @@ export default {
         return obj.id;
       }
 
-      const id = uuid.create().hex;
+      const id = uuid.v1().hex;
       return { ...obj, id };
     },
     currentUser: (obj, args, context) => (

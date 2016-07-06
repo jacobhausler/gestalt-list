@@ -37,7 +37,7 @@ export const SignIn = types => ({
       await bcrypt.compare(password, user.passwordHash);
 
       session.currentUserID = user.id;
-      session.id = uuid.create().hex;
+      session.id = uuid.v1().hex;
 
       return { session };
     } catch (e) {
@@ -56,7 +56,7 @@ export const SignOut = types => ({
     const { session } = context;
     session.currentUserID = null;
 
-    const id = uuid.create().hex;
+    const id = uuid.v1().hex;
     session.id = id;
 
     return { session };
@@ -93,7 +93,7 @@ export const SignUp = types => ({
     });
 
     session.currentUserID = user.id;
-    session.id = uuid.create().hex;
+    session.id = uuid.v1().hex;
     return { session };
   },
 });
