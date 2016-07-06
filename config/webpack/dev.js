@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
+// const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 const argv = require('yargs').argv;
 const nodeExternals = require('webpack-node-externals');
 
@@ -76,8 +76,8 @@ if (env === 'development') {
   );
 }
 
-if (env === 'development' && !argv.no_type_check) {
-  config.plugins.push(new FlowStatusWebpackPlugin());
-}
+// if (env === 'development' && !argv.no_type_check) {
+//   config.plugins.push(new FlowStatusWebpackPlugin());
+// }
 
 module.exports = config;

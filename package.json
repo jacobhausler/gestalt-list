@@ -8,7 +8,7 @@
     "prebuild": "npm run test && npm run build:clean",
     "build:clean": "rimraf dist/*",
     "build": "webpack --config config/webpack/dev.js --no_type_check",
-    "test": "mocha-webpack 'src/tests/**/test.js' --opts config/test/mocha-webpack.opts",
+    "test": "mocha-webpack --opts config/test/mocha-webpack.opts",
     "test:watch": "npm run test -- --watch",
     "dev": "nodemon",
     "migrate": "gestalt migrate --url postgres://localhost/gestalt_clp --glob src/**/mutations.js",
@@ -44,7 +44,7 @@
     "gestalt-server": "^0.0.17",
     "import-all": "^1.0.1",
     "lodash": "^4.13.1",
-    "uuid-js": "^0.7.5"
+    "uuid": "^2.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.9.0",

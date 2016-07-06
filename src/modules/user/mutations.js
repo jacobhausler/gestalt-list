@@ -1,6 +1,6 @@
 import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
-import uuid from 'uuid-js';
+import uuid from 'uuid';
 
 export const Update = types => ({
   name: 'UpdateUser',

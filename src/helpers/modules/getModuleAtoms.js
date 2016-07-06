@@ -1,4 +1,4 @@
-import { reduce } from 'lodash';
+import { reduce, values } from 'lodash';
 
 // Takes set of modules and the atom key i.e. hooks
 // Returns an array of all the module atoms i.e. all the hooks
@@ -9,7 +9,7 @@ export default (modules, key) => reduce(
 
     if (value) {
       if (typeof value === 'object') {
-        return [...result, ...Object.values(value)];
+        return [...result, ...values(value)];
       }
 
       return [...result, value];

@@ -1,4 +1,4 @@
-import uuid from 'uuid-js';
+import uuid from 'uuid';
 
 export default {
   name: 'Session',

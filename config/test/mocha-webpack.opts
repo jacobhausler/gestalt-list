@@ -1,3 +1,4 @@
+src/**/*test.js
 --webpack-config config/webpack/test.js
 --recursive
 --require source-map-support/register

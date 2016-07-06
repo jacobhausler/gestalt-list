@@ -1,6 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
+// const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
 
 const __root = path.join(__dirname, '../../');
 const __src = path.join(__root, 'src');
@@ -20,9 +20,9 @@ module.exports = {
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
   },
   externals: [nodeExternals()],
-  plugins: [
-    new FlowStatusWebpackPlugin(),
-  ],
+  // plugins: [
+  //   new FlowStatusWebpackPlugin(),
+  // ],
   module: {
     preLoaders: [
       {
