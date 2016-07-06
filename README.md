@@ -1,4 +1,4 @@
-# Node Boilerplate
+# gestalt-list
 
 [![Build Status](https://travis-ci.org/slightlytyler/node-boilerplate.svg?branch=master)](https://travis-ci.org/slightlytyler/node-boilerplate)
 
@@ -7,13 +7,9 @@
 From a blank directory:
 
 ```
-git clone git@github.com:slightlytyler/node-boilerplate.git .
+git clone git@github.com:jacobhausler/gestaltCLP2.git .
 npm install
 ```
-
-#### CI Setup
-
-Activate your repo on Travis and away you go!
 
 ## Development
 
@@ -21,21 +17,11 @@ Activate your repo on Travis and away you go!
 npm run dev
 ```
 
-Navigate to `localhost:3000` and you should see "Hello World!".
-
-## Type checking
-
-Type checking is performed by [Flow](https://flowtype.org/) during the build step. To opt in a file add a
-
-```javascript
-// @flow
-```
-
-comment at the top of the file and it will be checked.
+API and graphiql are both served from 'localhost:8000/graphql'
 
 ## Testing
 
-Test files must be named `test.js`. Place them in the appropriate subdirectories of `src/tests`.
+All files in source that end with `test.js` are aggregated and run. Tests should be colocated with their sources.
 
 You will need to familiarize yourself with [mocha](https://mochajs.org/), [chai](http://chaijs.com/), [sinon](http://sinonjs.org/), and [sinon-chai](https://github.com/domenic/sinon-chai).
 

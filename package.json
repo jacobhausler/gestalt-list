@@ -1,7 +1,7 @@
 {
-  "name": "node-boilerplate",
-  "version": "0.1.2",
-  "description": "A minimal Node boilerplate built with ES6 + Webpack",
+  "name": "gestalt-list",
+  "version": "0.1.0",
+  "description": "A cragislist like GraphQL API built with Gestalt",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -25,16 +25,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/slightlytyler/node-boilerplate"
+    "url": "https://github.com/jacobhausler/gestaltCLP2"
   },
   "keywords": [
-    "Node",
-    "Boilerplate",
-    "ES6",
-    "Webpack",
-    "Babel"
+    "Gestalt",
+    "GraphQL"
   ],
-  "author": "Tyler Martinez",
+  "authors": ["Jacob Hausler", "Tyler Martinez"],
   "license": "MIT",
   "dependencies": {
     "bcrypt-as-promised": "^1.1.0",
