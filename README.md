@@ -3,12 +3,19 @@
 [![Build Status](https://travis-ci.org/jacobhausler/gestaltCLP2.svg?branch=master)](https://travis-ci.org/jacobhausler/gestaltCLP2)
 
 ## Install
+Start Postgres
 
 From a blank directory:
 
 ```
-git clone git@github.com:jacobhausler/gestaltCLP2.git .
+git clone git@github.com:jacobhausler/gestalt-list.git .
+
 npm install
+
+createdb gestalt-list
+
+gestalt migrate
+
 ```
 
 ## Development
@@ -23,7 +30,7 @@ API and graphiql are both served from 'localhost:8000/graphql'
 
 All files in source that end with `test.js` are aggregated and run. Tests should be colocated with their sources.
 
-You will need to familiarize yourself with [mocha](https://mochajs.org/), [chai](http://chaijs.com/), [sinon](http://sinonjs.org/), and [sinon-chai](https://github.com/domenic/sinon-chai).
+You will need to familiarize yourself with [mocha](https://mochajs.org/), [chai](http://chaijs.com/), [sinon](http://sinonjs.org/), [sinon-chai](https://github.com/domenic/sinon-chai), and [gestalt](https://github.com/charlieschwabacher/gestalt).
 
 #### Single run
 
