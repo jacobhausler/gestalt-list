@@ -11,7 +11,7 @@
     "test": "mocha-webpack --opts config/test/mocha-webpack.opts",
     "test:watch": "npm run test -- --watch",
     "dev": "nodemon",
-    "migrate": "gestalt migrate --url postgres://localhost/gestalt_clp --glob src/**/mutations.js",
+    "migrate": "gestalt migrate --url postgres://localhost/gestalt_clp --mutations-glob src/**/mutations.js",
     "deploy": "better-npm-run deploy"
   },
   "betterScripts": {
