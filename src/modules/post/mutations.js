@@ -1,4 +1,5 @@
 import assert from 'assert';
+import { chain } from 'lodash';
 
 export const Create = types => ({
   name: 'CreatePost',
@@ -42,19 +43,29 @@ export const Delete = types => ({
     changedPost: types.Post,
   },
   mutateAndGetPayload: async (input, context) => {
-    const { id, title, text } = input;
+    const { id } = input;
     const { db } = context;
     const strippedId = id.split(':')[1];
-    const oldPost = await db.findBy('posts', { id: strippedId });
-    const newPost = { ...oldPost, updatedAt: new Date(), title, text };
 
-    await db.deleteBy(
+    // will fail if the post doesn't exist
+    await db.findBy('posts', { id: strippedId });
+
+    const updates = {
+      ...chain(input).
+      omit('id').
+      omitBy('isUndefined').
+      value(),
+      updatedAt: new Date(),
+    };
+
+    // the update method returns an array of updated rows
+    const changedPost = await db.update(
       'posts',
-      { id: strippedId }
-    );
-
-    const changedPost = await db.insert('posts', newPost);
+      { id: strippedId },
+      updates,
+    )[0];
 
     return { changedPost };
   },
 });
+
