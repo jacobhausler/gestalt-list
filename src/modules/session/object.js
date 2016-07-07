@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import uuid from 'uuid-js';
 
 export default {
   name: 'Session',
@@ -8,7 +8,7 @@ export default {
         return obj.id;
       }
 
-      const id = uuid.v1().hex;
+      const id = uuid.create().hex;
       return { ...obj, id };
     },
     currentUser: (obj, args, context) => (

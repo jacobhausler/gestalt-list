@@ -1,23 +1,7 @@
 import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
-import uuid from 'uuid';
-
-export const Update = types => ({
-  name: 'UpdateUser',
-  inputFields: {
-    email: types.String,
-    password: types.String,
-    firstName: types.String,
-    lastName: types.String,
-  },
-  outputFields: {
-    // changedUser: types.User,
-    placeholder: types.String,
-  },
-  mutateAndGetPayload: () => ({
-    placeholder: 'Waiting for gestalt-postgres to add update method to DatabaseConnector',
-  }),
-});
+import uuid from 'uuid-js';
+import { chain, isUndefined } from 'lodash';
 
 export const SignIn = types => ({
   name: 'SignIn',
@@ -37,7 +21,7 @@ export const SignIn = types => ({
       await bcrypt.compare(password, user.passwordHash);
 
       session.currentUserID = user.id;
-      session.id = uuid.v1().hex;
+      session.id = uuid.create().hex;
 
       return { session };
     } catch (e) {
@@ -56,8 +40,9 @@ export const SignOut = types => ({
     const { session } = context;
     session.currentUserID = null;
 
-    const id = uuid.v1().hex;
-    session.id = id;
+    const newId = uuid.create().hex;
+
+    session.id = newId;
 
     return { session };
   },
@@ -93,7 +78,7 @@ export const SignUp = types => ({
     });
 
     session.currentUserID = user.id;
-    session.id = uuid.v1().hex;
+    session.id = uuid.create().hex;
     return { session };
   },
 });
@@ -151,3 +136,47 @@ export const Unfollow = types => ({
     return { currentUser, user };
   },
 });
+
+export const Update = types => ({
+  name: 'UpdateUser',
+  inputFields: {
+    email: types.String,
+    password: types.String,
+    firstName: types.String,
+    locationId: types.String,
+  },
+  outputFields: {
+    changedPost: types.Post,
+  },
+  mutateAndGetPayload: async (input, context) => {
+    const { db, session } = context;
+    const { currentUserID } = session;
+    const inputs = { ...input };
+
+    if (typeof inputs.locationId !== 'undefined' && inputs.locationId) {
+      inputs.locationId = inputs.locationId.split(':')[1];
+    }
+
+    const changeFields = chain(inputs)
+      .omit('clientMutationId')
+      .omitBy(isUndefined)
+      .value();
+
+    const updates = {
+      ...changeFields,
+      updatedAt: new Date(),
+    };
+
+    // the update method returns an array of updated rows
+    const returnUser = await db.update(
+      'users',
+      { id: currentUserID },
+      updates,
+    );
+
+    const changedUser = returnUser[0];
+
+    return { changedUser };
+  },
+});
+

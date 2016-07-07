@@ -1,4 +1,5 @@
 import assert from 'assert';
+import { chain, isUndefined } from 'lodash';
 
 export const Create = types => ({
   name: 'CreatePost',
@@ -31,7 +32,7 @@ export const Create = types => ({
   },
 });
 
-export const Delete = types => ({
+export const Update = types => ({
   name: 'UpdatePost',
   inputFields: {
     id: types.String,
@@ -42,19 +43,37 @@ export const Delete = types => ({
     changedPost: types.Post,
   },
   mutateAndGetPayload: async (input, context) => {
-    const { id, title, text } = input;
-    const { db } = context;
+    const { id } = input;
+    const { db, session } = context;
+    const { currentUserID } = session;
     const strippedId = id.split(':')[1];
-    const oldPost = await db.findBy('posts', { id: strippedId });
-    const newPost = { ...oldPost, updatedAt: new Date(), title, text };
 
-    await db.deleteBy(
+    // will fail if the post doesn't exist
+    const oldPost = await db.findBy('posts', { id: strippedId });
+
+    assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
+
+    const changeFields = chain(input)
+      .omit('id')
+      .omit('clientMutationId')
+      .omitBy(isUndefined)
+      .value();
+
+    const updates = {
+      ...changeFields,
+      updatedAt: new Date(),
+    };
+
+    // the update method returns an array of updated rows
+    const returnPost = await db.update(
       'posts',
-      { id: strippedId }
+      { id: strippedId },
+      updates,
     );
 
-    const changedPost = await db.insert('posts', newPost);
+    const changedPost = returnPost[0];
 
     return { changedPost };
   },
 });
+
