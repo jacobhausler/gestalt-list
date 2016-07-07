@@ -43,6 +43,34 @@ export const Delete = types => ({
     changedPost: types.Post,
   },
   mutateAndGetPayload: async (input, context) => {
+    const { id, title, text } = input;
+    const { db } = context;
+    const strippedId = id.split(':')[1];
+    const oldPost = await db.findBy('posts', { id: strippedId });
+    const newPost = { ...oldPost, updatedAt: new Date(), title, text };
+
+    await db.deleteBy(
+      'posts',
+      { id: strippedId }
+    );
+
+    const changedPost = await db.insert('posts', newPost);
+
+    return { changedPost };
+  },
+});
+
+export const Update = types => ({
+  name: 'UpdatePost',
+  inputFields: {
+    id: types.String,
+    title: types.String,
+    text: types.String,
+  },
+  outputFields: {
+    changedPost: types.Post,
+  },
+  mutateAndGetPayload: async (input, context) => {
     const { id } = input;
     const { db } = context;
     const strippedId = id.split(':')[1];
@@ -50,20 +78,25 @@ export const Delete = types => ({
     // will fail if the post doesn't exist
     await db.findBy('posts', { id: strippedId });
 
-    const updates = {
-      ...chain(input).
+    const changeFields = chain(input).
       omit('id').
+      omit('clientMutationId').
       omitBy('isUndefined').
-      value(),
+      value();
+
+    const updates = {
+      ...changeFields,
       updatedAt: new Date(),
     };
 
     // the update method returns an array of updated rows
-    const changedPost = await db.update(
+    const returnPost = await db.update(
       'posts',
       { id: strippedId },
       updates,
-    )[0];
+    );
+
+    const changedPost = returnPost[0];
 
     return { changedPost };
   },

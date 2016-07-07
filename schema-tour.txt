@@ -20,6 +20,7 @@ mutation{
     email:"jacob@hausler.io",
     firstName:"jacob",
     lastName:"hausler",
+    password:"password",
   }){
     session{
       id
