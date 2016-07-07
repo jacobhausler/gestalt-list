@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/jacobhausler/gestaltCLP2.svg?branch=master)](https://travis-ci.org/jacobhausler/gestaltCLP2)
 
+A craigslist like GraphQL API built with [Gestalt](https://github.com/charlieschwabacher/gestalt)
+Checkout the frontend [Apollo List](https://github.com/slightlytyler/apollo-list)
+
+
 ## Install
 
 Start Postgres
