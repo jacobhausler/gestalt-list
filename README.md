@@ -21,7 +21,7 @@ gestalt migrate
 npm run dev
 ```
 
-API and graphiql are both served from 'localhost:8000/graphql'
+API and graphiql are both served from `localhost:8000/graphql`.
 
 ## Testing
 
