@@ -40,7 +40,7 @@ export const SignOut = types => ({
     const { session } = context;
     session.currentUserID = null;
 
-    const newId = uuid.create()('hex');
+    const newId = uuid.create().hex;
 
     session.id = newId;
 

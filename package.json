@@ -44,7 +44,6 @@
     "gestalt-server": "^0.0.17",
     "import-all": "^1.0.1",
     "lodash": "^4.13.1",
-    "uuid": "^2.0.2",
     "uuid-js": "^0.7.5"
   },
   "devDependencies": {
