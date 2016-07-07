@@ -32,34 +32,6 @@ export const Create = types => ({
   },
 });
 
-export const Delete = types => ({
-  name: 'UpdatePost',
-  inputFields: {
-    id: types.String,
-    title: types.String,
-    text: types.String,
-  },
-  outputFields: {
-    changedPost: types.Post,
-  },
-  mutateAndGetPayload: async (input, context) => {
-    const { id, title, text } = input;
-    const { db } = context;
-    const strippedId = id.split(':')[1];
-    const oldPost = await db.findBy('posts', { id: strippedId });
-    const newPost = { ...oldPost, updatedAt: new Date(), title, text };
-
-    await db.deleteBy(
-      'posts',
-      { id: strippedId }
-    );
-
-    const changedPost = await db.insert('posts', newPost);
-
-    return { changedPost };
-  },
-});
-
 export const Update = types => ({
   name: 'UpdatePost',
   inputFields: {
