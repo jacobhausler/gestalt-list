@@ -1,6 +1,6 @@
 import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
-import uuid from 'uuid';
+import uuid from 'uuid-js';
 
 export const Update = types => ({
   name: 'UpdateUser',
@@ -37,7 +37,9 @@ export const SignIn = types => ({
       await bcrypt.compare(password, user.passwordHash);
 
       session.currentUserID = user.id;
-      session.id = uuid.v1().hex;
+      session.id = uuid.create().hex;
+
+      console.log(session.id);
 
       return { session };
     } catch (e) {
@@ -56,8 +58,11 @@ export const SignOut = types => ({
     const { session } = context;
     session.currentUserID = null;
 
-    const id = uuid.v1().hex;
-    session.id = id;
+    const newId = uuid.create()('hex');
+
+    console.log(newId);
+
+    session.id = newId;
 
     return { session };
   },
@@ -93,7 +98,7 @@ export const SignUp = types => ({
     });
 
     session.currentUserID = user.id;
-    session.id = uuid.v1().hex;
+    session.id = uuid.create().hex;
     return { session };
   },
 });
