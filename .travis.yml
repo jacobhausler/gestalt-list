@@ -8,5 +8,8 @@ addons:
     - gcc-4.8
     - g++-4.8
 env:
-  - TRAVIS=travis CXX=g++-4.8
+- TRAVIS=travis CXX=g++-4.8
 script: npm run build
+notifications:
+  slack:
+    secure: L7OFgVVkCu3vp/olX0fisbMYeM8n4caaANReCu13qbpdmNfb4PcWIEGg58mCRa4ISCW3rNY6OcNEcbsaG4fwYfbOoXY12iNXGR7xesSFmwzEMK71HkhlJakpm2kPCE+5MYJEMyaeTEoSooDtjr84w9K3anRhGTPQW3gpk6H2fy9jYtc+6A4+xh9F7DomEENdlZrouDVGf64Tp/CREJREPVkGIt8/Qrw0NwjfNFIRDbQi9RJyhq2x8+T4Mag00aMoHPuD+w0OG5pyf94WucUTS7enhDErftG2zMrWFyCjcyycrdsSlY8a6IwSh39gCsoT5PZZ3Jr6k7NAzUlqGQfQ+Q6irVXepOVRB1SfPrC56WZ8qxztO98V2jC1IralRTRyhBCwmZCkm6TgtEjBJlyt3jHaJTS+CwddBDOzdY2lOUUDOF9o/cUXLIe4rxqtpyzeR2RCkYul9Qt0snt73LOacNnXvZDsEwahepBV3WPK028foP+tf163tbXkiCP9mEABysTBGv803wx4dFxSVxgsivsbQj83O0zgxclxpMStF+PgzNPn8BfvcZL3cDAtBsPpkuz+KOwen+IAAn9YbpTOPEcDFYtCWjlMImF6W8s9qOxYpFf3LkfVqa+6b4PCPs+ZKVWkL4FGBvN2oxVWZA05i2ds/KyZc04PToi+FwAxsCA=
