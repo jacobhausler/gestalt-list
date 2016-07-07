@@ -1,6 +1,6 @@
 # Gestalt List
 
-[![Build Status](https://travis-ci.org/jacobhausler/gestaltCLP2.svg?branch=master)](https://travis-ci.org/jacobhausler/gestaltCLP2)
+[![Build Status](https://travis-ci.org/jacobhausler/gestalt-list.svg?branch=master)](https://travis-ci.org/jacobhausler/gestalt-list)
 
 A craigslist like GraphQL API built with [Gestalt](https://github.com/charlieschwabacher/gestalt)
 
