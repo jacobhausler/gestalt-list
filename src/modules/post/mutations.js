@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { chain } from 'lodash';
+import { chain, isUndefined } from 'lodash';
 
 export const Create = types => ({
   name: 'CreatePost',
@@ -81,11 +81,11 @@ export const Update = types => ({
 
     assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
 
-    const changeFields = chain(input).
-      omit('id').
-      omit('clientMutationId').
-      omitBy('isUndefined').
-      value();
+    const changeFields = chain(input)
+      .omit('id')
+      .omit('clientMutationId')
+      .omitBy(isUndefined)
+      .value();
 
     const updates = {
       ...changeFields,

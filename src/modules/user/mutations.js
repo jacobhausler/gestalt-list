@@ -1,7 +1,7 @@
 import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
 import uuid from 'uuid-js';
-import chain from 'lodash';
+import { chain, isUndefined } from 'lodash';
 
 export const SignIn = types => ({
   name: 'SignIn',
@@ -23,8 +23,6 @@ export const SignIn = types => ({
       session.currentUserID = user.id;
       session.id = uuid.create().hex;
 
-      console.log(session.id);
-
       return { session };
     } catch (e) {
       throw new Error('Email or password is invalid');
@@ -43,8 +41,6 @@ export const SignOut = types => ({
     session.currentUserID = null;
 
     const newId = uuid.create()('hex');
-
-    console.log(newId);
 
     session.id = newId;
 
@@ -161,10 +157,10 @@ export const Update = types => ({
       inputs.locationId = inputs.locationId.split(':')[1];
     }
 
-    const changeFields = chain(inputs).
-      omit('clientMutationId').
-      omitBy('isUndefined').
-      value();
+    const changeFields = chain(inputs)
+      .omit('clientMutationId')
+      .omitBy(isUndefined)
+      .value();
 
     const updates = {
       ...changeFields,
