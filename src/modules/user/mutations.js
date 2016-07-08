@@ -20,7 +20,7 @@ export const SignIn = types => ({
       const user = await db.findBy('users', { email });
       await bcrypt.compare(password, user.passwordHash);
 
-      session.currentUserID = user.id;
+      session.currentUserId = user.id;
       session.id = uuid.create().hex;
 
       return { session };
@@ -38,7 +38,7 @@ export const SignOut = types => ({
   },
   mutateAndGetPayload: (input, context) => {
     const { session } = context;
-    session.currentUserID = null;
+    session.currentUserId = null;
 
     const newId = uuid.create().hex;
 
@@ -77,7 +77,7 @@ export const SignUp = types => ({
       lastName,
     });
 
-    session.currentUserID = user.id;
+    session.currentUserId = user.id;
     session.id = uuid.create().hex;
     return { session };
   },
@@ -86,7 +86,7 @@ export const SignUp = types => ({
 export const Follow = types => ({
   name: 'FollowUser',
   inputFields: {
-    userID: types.ID,
+    userId: types.ID,
   },
   outputFields: {
     followedUser: types.User,
@@ -94,17 +94,17 @@ export const Follow = types => ({
   },
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
-    const { currentUserID } = session;
-    const followedUserID = input.userID;
+    const { currentUserId } = session;
+    const followedUserId = input.userId;
 
     await db.exec(
       'INSERT INTO user_followed_users (user_id, followed_user_id) ' +
       'VALUES ($1, $2);',
-      [currentUserID, followedUserID]
+      [currentUserId, followedUserId]
     );
 
-    const currentUser = await db.findBy('users', { id: currentUserID });
-    const followedUser = await db.findBy('users', { id: followedUserID });
+    const currentUser = await db.findBy('users', { id: currentUserId });
+    const followedUser = await db.findBy('users', { id: followedUserId });
 
     return { currentUser, followedUser };
   },
@@ -113,7 +113,7 @@ export const Follow = types => ({
 export const Unfollow = types => ({
   name: 'UnfollowUser',
   inputFields: {
-    userID: types.ID,
+    userId: types.ID,
     follow: types.Boolean,
   },
   outputFields: {
@@ -122,16 +122,16 @@ export const Unfollow = types => ({
   },
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
-    const { currentUserID } = session;
-    const followedUserID = input.userID.split(':')[1];
+    const { currentUserId } = session;
+    const followedUserId = input.userId.split(':')[1];
 
     await db.deleteBy(
       'user_followed_users',
-      { userId: currentUserID, followedUserID }
+      { userId: currentUserId, followedUserId }
     );
 
-    const currentUser = await db.findBy('users', { id: currentUserID });
-    const user = await db.findBy('users', { id: followedUserID });
+    const currentUser = await db.findBy('users', { id: currentUserId });
+    const user = await db.findBy('users', { id: followedUserId });
 
     return { currentUser, user };
   },
@@ -150,7 +150,7 @@ export const Update = types => ({
   },
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
-    const { currentUserID } = session;
+    const { currentUserId } = session;
     const inputs = { ...input };
     let hostedByLocationId = null;
 
@@ -175,7 +175,7 @@ export const Update = types => ({
     // the update method returns an array of updated rows
     const returnUser = await db.update(
       'users',
-      { id: currentUserID },
+      { id: currentUserId },
       updates,
     );
 

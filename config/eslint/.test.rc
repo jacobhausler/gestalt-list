@@ -18,6 +18,7 @@
     "import/no-unresolved": "off",
     "no-console": "off",
     "no-underscore-dangle": "off",
-    "no-unused-expressions": "off"
+    "no-unused-expressions": "off",
+    "new-cap": "off"
   }
 }

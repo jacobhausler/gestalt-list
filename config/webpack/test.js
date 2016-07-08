@@ -1,3 +1,4 @@
+const babelPolyfill = require('babel-polyfill');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 // const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
@@ -42,11 +43,13 @@ module.exports = {
   resolve: {
     alias: {
       src: __src,
+      helpers: path.join(__src, 'helpers'),
       modules: path.join(__src, 'modules'),
       routes: path.join(__src, 'routes')
     }
   },
   eslint: {
-    configFile: path.join(__root, 'config/eslint/.test.rc')
+    configFile: path.join(__root, 'config/eslint/.test.rc'),
+    emitWarning: true
   },
 }
