@@ -32,11 +32,11 @@ describe('Post mutations', () => {
     });
 
     it('returns a record with created title', () => {
-      payload.should.have.deep.property('changedPost.title', 'test title');
+      payload.should.have.deep.property('changedPost.title', input.title);
     });
 
     it('return a record with created text', () => {
-      payload.should.have.deep.property('changedPost.text', 'test text');
+      payload.should.have.deep.property('changedPost.text', input.text);
     });
 
     it('returns a record with current user as authored relationship', () => {
@@ -44,7 +44,7 @@ describe('Post mutations', () => {
     });
   });
 
-  describe('Update', async () => {
+  describe('Update', () => {
     const now = new Date();
     const input = {
       id: 'Post:p1',
@@ -60,11 +60,11 @@ describe('Post mutations', () => {
     });
 
     it('returns a record with updated title', () => {
-      payload.should.have.deep.property('changedPost.title', 'next title');
+      payload.should.have.deep.property('changedPost.title', input.title);
     });
 
     it('returns a record with updated text', () => {
-      payload.should.have.deep.property('changedPost.text', 'next text');
+      payload.should.have.deep.property('changedPost.text', input.text);
     });
 
     it('returns a record with updated updatedAt', () => {
@@ -74,6 +74,18 @@ describe('Post mutations', () => {
   });
 
   describe('Delete', () => {
+    const input = {
+      id: 'Post:p1',
+    };
+    let payload;
 
+    before(async done => {
+      payload = await mutations.Delete({}).mutateAndGetPayload(input, context);
+      done();
+    });
+
+    it('returns the deleted record id', () => {
+      input.id.should.contain(payload.deletedId);
+    });
   });
 });

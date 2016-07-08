@@ -9,5 +9,6 @@ export default methods => ({
     id,
     ...attrs,
   }],
+  deleteBy: () => true,
   ...methods,
 });
