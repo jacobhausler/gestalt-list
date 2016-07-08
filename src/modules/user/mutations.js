@@ -95,16 +95,16 @@ export const Follow = types => ({
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
     const { currentUserId } = session;
-    const followedUserID = input.userID;
+    const followedUserId = input.userID;
 
     await db.exec(
       'INSERT INTO user_followed_users (user_id, followed_user_id) ' +
       'VALUES ($1, $2);',
-      [currentUserId, followedUserID]
+      [currentUserId, followedUserId]
     );
 
     const currentUser = await db.findBy('users', { id: currentUserId });
-    const followedUser = await db.findBy('users', { id: followedUserID });
+    const followedUser = await db.findBy('users', { id: followedUserId });
 
     return { currentUser, followedUser };
   },
@@ -123,15 +123,15 @@ export const Unfollow = types => ({
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
     const { currentUserId } = session;
-    const followedUserID = input.userID.split(':')[1];
+    const followedUserId = input.userID.split(':')[1];
 
     await db.deleteBy(
       'user_followed_users',
-      { userId: currentUserId, followedUserID }
+      { userId: currentUserId, followedUserId }
     );
 
     const currentUser = await db.findBy('users', { id: currentUserId });
-    const user = await db.findBy('users', { id: followedUserID });
+    const user = await db.findBy('users', { id: followedUserId });
 
     return { currentUser, user };
   },
