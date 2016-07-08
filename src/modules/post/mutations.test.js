@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
+import { omit, merge } from 'lodash';
 import { createMockDb } from 'helpers/tests';
 import * as mutations from './mutations';
 
@@ -22,6 +23,7 @@ describe('Post mutations', () => {
   };
 
   describe('Create', () => {
+    const mutation = mutations.Create({}).mutateAndGetPayload;
     const dbInsert = spy(db, 'insert');
     const input = {
       title: 'test title',
@@ -30,8 +32,26 @@ describe('Post mutations', () => {
     let payload;
 
     before(async done => {
-      payload = await mutations.Create({}).mutateAndGetPayload(input, context);
+      payload = await mutation(input, context);
       done();
+    });
+
+    it('should fail if no title is present', async done => {
+      try {
+        await mutation(omit(input, 'title'), context);
+        done(new Error('Mutation completed without asserting error.'));
+      } catch (e) {
+        done();
+      }
+    });
+
+    it('should fail if no text is present', async done => {
+      try {
+        await mutation(omit(input, 'text'), context);
+        done(new Error('Mutation completed without asserting error.'));
+      } catch (e) {
+        done();
+      }
     });
 
     it('should call db.insert on posts table', () => {
@@ -64,6 +84,7 @@ describe('Post mutations', () => {
   });
 
   describe('Update', () => {
+    const mutation = mutations.Update({}).mutateAndGetPayload;
     const dbUpdate = spy(db, 'update');
     const now = new Date();
     const input = {
@@ -75,8 +96,21 @@ describe('Post mutations', () => {
     let payload;
 
     before(async done => {
-      payload = await mutations.Update({}).mutateAndGetPayload(input, context);
+      payload = await mutation(input, context);
       done();
+    });
+
+    it('should fail if no author is not current user', async done => {
+      try {
+        await mutation(input, merge({}, context, {
+          session: {
+            currentUserID: 'u2',
+          },
+        }));
+        done(new Error('Mutation completed without asserting error.'));
+      } catch (e) {
+        done();
+      }
     });
 
     it('should call db.update on posts table', () => {
@@ -108,6 +142,7 @@ describe('Post mutations', () => {
   });
 
   describe('Delete', () => {
+    const mutation = mutations.Delete({}).mutateAndGetPayload;
     const dbDeleteBy = spy(db, 'deleteBy');
     const input = {
       id: 'Post:p1',
@@ -115,8 +150,21 @@ describe('Post mutations', () => {
     let payload;
 
     before(async done => {
-      payload = await mutations.Delete({}).mutateAndGetPayload(input, context);
+      payload = await mutation(input, context);
       done();
+    });
+
+    it('should fail if no author is not current user', async done => {
+      try {
+        await mutation(input, merge({}, context, {
+          session: {
+            currentUserID: 'u2',
+          },
+        }));
+        done(new Error('Mutation completed without asserting error.'));
+      } catch (e) {
+        done();
+      }
     });
 
     it('should call db.deleteBy on posts table', () => {

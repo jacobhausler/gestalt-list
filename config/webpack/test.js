@@ -49,6 +49,7 @@ module.exports = {
     }
   },
   eslint: {
-    configFile: path.join(__root, 'config/eslint/.test.rc')
+    configFile: path.join(__root, 'config/eslint/.test.rc'),
+    emitWarning: true
   },
 }
