@@ -14,7 +14,7 @@ export default {
     },
     following: async ({ id }, args, { db, session }) => {
       const follows = await db.queryBy('user_followed_users', {
-        userID: session.currentUserId,
+        userId: session.currentUserId,
         followedUserId: id,
       });
       return follows.length > 0;

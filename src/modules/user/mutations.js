@@ -86,7 +86,7 @@ export const SignUp = types => ({
 export const Follow = types => ({
   name: 'FollowUser',
   inputFields: {
-    userID: types.ID,
+    userId: types.ID,
   },
   outputFields: {
     followedUser: types.User,
@@ -95,7 +95,7 @@ export const Follow = types => ({
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
     const { currentUserId } = session;
-    const followedUserId = input.userID;
+    const followedUserId = input.userId;
 
     await db.exec(
       'INSERT INTO user_followed_users (user_id, followed_user_id) ' +
@@ -113,7 +113,7 @@ export const Follow = types => ({
 export const Unfollow = types => ({
   name: 'UnfollowUser',
   inputFields: {
-    userID: types.ID,
+    userId: types.ID,
     follow: types.Boolean,
   },
   outputFields: {
@@ -123,7 +123,7 @@ export const Unfollow = types => ({
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
     const { currentUserId } = session;
-    const followedUserId = input.userID.split(':')[1];
+    const followedUserId = input.userId.split(':')[1];
 
     await db.deleteBy(
       'user_followed_users',
