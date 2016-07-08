@@ -11,7 +11,7 @@ describe('Post mutations', () => {
       id,
       title: 'test title',
       text: 'test text',
-      authoredByUserID: currentUserID,
+      authoredByUserId: currentUserID,
     }),
   });
   const context = {
@@ -46,7 +46,7 @@ describe('Post mutations', () => {
         'updatedAt',
         'title',
         'text',
-        'authoredByUserID',
+        'authoredByUserId',
       ]);
     });
 
@@ -59,7 +59,7 @@ describe('Post mutations', () => {
     });
 
     it('should return a record with current user as authored relationship', () => {
-      payload.should.have.deep.property('changedPost.authoredByUserID', currentUserID);
+      payload.should.have.deep.property('changedPost.authoredByUserId', currentUserID);
     });
   });
 
