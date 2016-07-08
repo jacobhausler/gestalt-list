@@ -49,7 +49,7 @@ export const Update = types => ({
     // will fail if the post doesn't exist
     const oldPost = await db.findBy('posts', { id: strippedId });
 
-    assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
+    assert(currentUserID === oldPost.authoredByUserID, "That's not your post!");
 
     const changeFields = chain(input)
       .omit('id')
@@ -92,7 +92,7 @@ export const Delete = types => ({
 
     const oldPost = await db.findBy('posts', { id: strippedId });
 
-    assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
+    assert(currentUserID === oldPost.authoredByUserID, "That's not your post!");
 
     await db.deleteBy(
       'posts',
