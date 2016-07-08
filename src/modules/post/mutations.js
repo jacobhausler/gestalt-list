@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { chain, isUndefined } from 'lodash';
+import { chain, isUndefined, isNull } from 'lodash';
 
 export const Create = types => ({
   name: 'CreatePost',
@@ -86,6 +86,7 @@ export const Update = types => ({
       .omit('id')
       .omit('clientMutationId')
       .omitBy(isUndefined)
+      .omitBy(isNull)
       .value();
 
     const updates = {

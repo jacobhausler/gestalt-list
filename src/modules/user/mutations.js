@@ -1,7 +1,7 @@
 import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
 import uuid from 'uuid-js';
-import { chain, isUndefined } from 'lodash';
+import { chain, isUndefined, isNull } from 'lodash';
 
 export const SignIn = types => ({
   name: 'SignIn',
@@ -146,20 +146,25 @@ export const Update = types => ({
     locationId: types.String,
   },
   outputFields: {
-    changedPost: types.Post,
+    changedUser: types.User,
   },
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
     const { currentUserID } = session;
     const inputs = { ...input };
+    let hostedByLocationId = null;
 
     if (typeof inputs.locationId !== 'undefined' && inputs.locationId) {
       inputs.locationId = inputs.locationId.split(':')[1];
+      hostedByLocationId = inputs.locationId;
     }
 
     const changeFields = chain(inputs)
       .omit('clientMutationId')
+      .omit('locationId')
+      .merge({ hostedByLocationId })
       .omitBy(isUndefined)
+      .omitBy(isNull)
       .value();
 
     const updates = {
