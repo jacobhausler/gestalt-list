@@ -43,6 +43,7 @@ module.exports = {
   resolve: {
     alias: {
       src: __src,
+      helpers: path.join(__src, 'helpers'),
       modules: path.join(__src, 'modules'),
       routes: path.join(__src, 'routes')
     }
