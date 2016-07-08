@@ -18,8 +18,6 @@ export const Create = types => ({
     assert(title.length > 0, 'Posts must have titles');
     assert(text.length > 0, 'Posts must have text');
 
-    await db.findBy('users', { id: currentUserID });
-
     const changedPost = await db.insert('posts', {
       createdAt: new Date(),
       updatedAt: new Date(),

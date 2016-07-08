@@ -1,3 +1,4 @@
+const babelPolyfill = require('babel-polyfill');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 // const FlowStatusWebpackPlugin = require('flow-status-webpack-plugin');
