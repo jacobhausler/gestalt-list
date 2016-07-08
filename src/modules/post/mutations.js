@@ -30,35 +30,6 @@ export const Create = types => ({
   },
 });
 
-export const Delete = types => ({
-  name: 'DeletePost',
-  inputFields: {
-    id: types.String,
-  },
-  outputFields: {
-    deletedId: types.String,
-  },
-  mutateAndGetPayload: async (input, context) => {
-    const { id } = input;
-    const { db, session } = context;
-    const { currentUserID } = session;
-    const strippedId = id.split(':')[1];
-
-    const oldPost = await db.findBy('posts', { id: strippedId });
-
-    assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
-
-    await db.deleteBy(
-      'posts',
-      { id: strippedId }
-    );
-
-    const deletedId = strippedId;
-
-    return { deletedId };
-  },
-});
-
 export const Update = types => ({
   name: 'UpdatePost',
   inputFields: {
@@ -105,3 +76,31 @@ export const Update = types => ({
   },
 });
 
+export const Delete = types => ({
+  name: 'DeletePost',
+  inputFields: {
+    id: types.String,
+  },
+  outputFields: {
+    deletedId: types.String,
+  },
+  mutateAndGetPayload: async (input, context) => {
+    const { id } = input;
+    const { db, session } = context;
+    const { currentUserID } = session;
+    const strippedId = id.split(':')[1];
+
+    const oldPost = await db.findBy('posts', { id: strippedId });
+
+    assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
+
+    await db.deleteBy(
+      'posts',
+      { id: strippedId }
+    );
+
+    const deletedId = strippedId;
+
+    return { deletedId };
+  },
+});
