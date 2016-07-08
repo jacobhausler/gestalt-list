@@ -78,7 +78,7 @@ describe('Post mutations', () => {
       payload.should.have.deep.property('changedPost.text', input.text);
     });
 
-    it('should return a record with current user as authored relationship', () => {
+    it('should return a record with current user as author', () => {
       payload.should.have.deep.property('changedPost.authoredByUserId', currentUserID);
     });
   });
@@ -100,7 +100,7 @@ describe('Post mutations', () => {
       done();
     });
 
-    it('should fail if no author is not current user', async done => {
+    it('should fail if author is not current user', async done => {
       try {
         await mutation(input, merge({}, context, {
           session: {
@@ -154,7 +154,7 @@ describe('Post mutations', () => {
       done();
     });
 
-    it('should fail if no author is not current user', async done => {
+    it('should fail if author is not current user', async done => {
       try {
         await mutation(input, merge({}, context, {
           session: {
