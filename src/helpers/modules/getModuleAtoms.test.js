@@ -15,7 +15,7 @@ describe('getModuleAtoms', () => {
     },
   };
 
-  it('returns an array of atoms given a collection modules', () => {
+  it('should return an array of atoms given a collection modules', () => {
     getModuleAtoms(modules, 'atomType').should.deep.equal(['atom1', 'atom2', 'atom3']);
   });
 });
