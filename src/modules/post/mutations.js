@@ -12,7 +12,7 @@ export const Create = types => ({
   },
   mutateAndGetPayload: async (
     { title, text },
-    { db, session: { currentUserID } }
+    { db, session: { currentUserId } }
   ) => {
     assert(title, 'Posts must have a title.');
     assert(text, 'Posts must have text.');
@@ -20,7 +20,7 @@ export const Create = types => ({
     const changedPost = await db.insert('posts', {
       createdAt: new Date(),
       updatedAt: new Date(),
-      authoredByUserId: currentUserID,
+      authoredByUserId: currentUserId,
       title,
       text,
     });
@@ -41,12 +41,12 @@ export const Update = types => ({
   },
   mutateAndGetPayload: async (
     input,
-    { db, session: { currentUserID } }
+    { db, session: { currentUserId } }
   ) => {
     const [/* type */, strippedId] = input.id.split(':');
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
-    assert(currentUserID === authoredByUserId, "That's not your post!");
+    assert(currentUserId === authoredByUserId, "That's not your post!");
 
     const changedFields = chain(input)
       .omit(['id', 'clientMutationId'])
@@ -77,12 +77,12 @@ export const Delete = types => ({
   },
   mutateAndGetPayload: async (
     { id },
-    { db, session: { currentUserID } }
+    { db, session: { currentUserId } }
   ) => {
     const [/* type */, strippedId] = id.split(':');
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
-    assert(currentUserID === authoredByUserId, "That's not your post!");
+    assert(currentUserId === authoredByUserId, "That's not your post!");
 
     await db.deleteBy(
       'posts',

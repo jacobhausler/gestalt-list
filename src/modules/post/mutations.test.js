@@ -6,19 +6,19 @@ import * as mutations from './mutations';
 
 describe('Post mutations', () => {
   const table = 'posts';
-  const currentUserID = 'u1';
+  const currentUserId = 'u1';
   const db = createMockDb({
     findBy: (type, { id }) => ({
       id,
       title: 'test title',
       text: 'test text',
-      authoredByUserId: currentUserID,
+      authoredByUserId: currentUserId,
     }),
   });
   const context = {
     db,
     session: {
-      currentUserID,
+      currentUserId,
     },
   };
 
@@ -79,7 +79,7 @@ describe('Post mutations', () => {
     });
 
     it('should return a record with current user as author', () => {
-      payload.should.have.deep.property('changedPost.authoredByUserId', currentUserID);
+      payload.should.have.deep.property('changedPost.authoredByUserId', currentUserId);
     });
   });
 
@@ -104,7 +104,7 @@ describe('Post mutations', () => {
       try {
         await mutation(input, merge({}, context, {
           session: {
-            currentUserID: 'u2',
+            currentUserId: 'u2',
           },
         }));
         done(new Error('Mutation completed without asserting error.'));
@@ -158,7 +158,7 @@ describe('Post mutations', () => {
       try {
         await mutation(input, merge({}, context, {
           session: {
-            currentUserID: 'u2',
+            currentUserId: 'u2',
           },
         }));
         done(new Error('Mutation completed without asserting error.'));

@@ -34,10 +34,10 @@ export const Delete = types => ({
   mutateAndGetPayload: async (input, context) => {
     const { locationId } = input;
     const { db, session } = context;
-    const { currentUserID } = session;
+    const { currentUserId } = session;
 
     await db.deleteBy('locations', { id: locationId });
-    const user = await db.findBy('users', { id: currentUserID });
+    const user = await db.findBy('users', { id: currentUserId });
 
     return { user };
   },

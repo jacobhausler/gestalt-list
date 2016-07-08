@@ -12,7 +12,7 @@ export default {
       return { ...obj, id };
     },
     currentUser: (obj, args, context) => (
-      obj.currentUserID && context.db.findBy('users', { id: obj.currentUserID })
+      obj.currentUserId && context.db.findBy('users', { id: obj.currentUserId })
     ),
   },
 };
