@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { chain, isUndefined, isNull } from 'lodash';
+import { chain, isNil } from 'lodash';
 
 export const Create = types => ({
   name: 'CreatePost',
@@ -10,13 +10,12 @@ export const Create = types => ({
   outputFields: {
     changedPost: types.Post,
   },
-  mutateAndGetPayload: async (input, context) => {
-    const { title, text } = input;
-    const { db, session } = context;
-    const { currentUserID } = session;
-
-    assert(title.length > 0, 'Posts must have titles');
-    assert(text.length > 0, 'Posts must have text');
+  mutateAndGetPayload: async (
+    { title, text },
+    { db, session: { currentUserID } }
+  ) => {
+    assert(title, 'Posts must have a title.');
+    assert(text, 'Posts must have text.');
 
     const changedPost = await db.insert('posts', {
       createdAt: new Date(),
@@ -40,37 +39,29 @@ export const Update = types => ({
   outputFields: {
     changedPost: types.Post,
   },
-  mutateAndGetPayload: async (input, context) => {
-    const { id } = input;
-    const { db, session } = context;
-    const { currentUserID } = session;
-    const strippedId = id.split(':')[1];
+  mutateAndGetPayload: async (
+    input,
+    { db, session: { currentUserID } }
+  ) => {
+    const [/* type */, strippedId] = input.id.split(':');
+    const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
-    // will fail if the post doesn't exist
-    const oldPost = await db.findBy('posts', { id: strippedId });
+    assert(currentUserID === authoredByUserId, "That's not your post!");
 
-    assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
-
-    const changeFields = chain(input)
-      .omit('id')
-      .omit('clientMutationId')
-      .omitBy(isUndefined)
-      .omitBy(isNull)
+    const changedFields = chain(input)
+      .omit(['id', 'clientMutationId'])
+      .omitBy(isNil)
       .value();
 
-    const updates = {
-      ...changeFields,
-      updatedAt: new Date(),
-    };
-
     // the update method returns an array of updated rows
-    const returnPost = await db.update(
+    const [changedPost] = await db.update(
       'posts',
       { id: strippedId },
-      updates,
+      {
+        ...changedFields,
+        updatedAt: new Date(),
+      },
     );
-
-    const changedPost = returnPost[0];
 
     return { changedPost };
   },
@@ -84,23 +75,20 @@ export const Delete = types => ({
   outputFields: {
     deletedId: types.String,
   },
-  mutateAndGetPayload: async (input, context) => {
-    const { id } = input;
-    const { db, session } = context;
-    const { currentUserID } = session;
-    const strippedId = id.split(':')[1];
+  mutateAndGetPayload: async (
+    { id },
+    { db, session: { currentUserID } }
+  ) => {
+    const [/* type */, strippedId] = id.split(':');
+    const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
-    const oldPost = await db.findBy('posts', { id: strippedId });
-
-    assert(currentUserID === oldPost.authoredByUserId, "That's not your post!");
+    assert(currentUserID === authoredByUserId, "That's not your post!");
 
     await db.deleteBy(
       'posts',
       { id: strippedId }
     );
 
-    const deletedId = strippedId;
-
-    return { deletedId };
+    return { deletedId: strippedId };
   },
 });
