@@ -1,4 +1,5 @@
 import assert from 'assert';
+import { stripId } from 'helpers/data';
 
 export const Create = types => ({
   name: 'CreateLocation',
@@ -26,7 +27,7 @@ export const Create = types => ({
 export const Delete = types => ({
   name: 'DeleteLocation',
   inputFields: {
-    locationId: types.String,
+    locationId: types.ID,
   },
   outputFields: {
     currentUser: types.User,
@@ -36,7 +37,7 @@ export const Delete = types => ({
     const { db, session } = context;
     const { currentUserId } = session;
 
-    await db.deleteBy('locations', { id: locationId });
+    await db.deleteBy('locations', { id: stripId(locationId) });
     const user = await db.findBy('users', { id: currentUserId });
 
     return { user };

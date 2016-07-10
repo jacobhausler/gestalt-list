@@ -28,6 +28,7 @@ describe('Post mutations', () => {
     const input = {
       title: 'test title',
       text: 'test text',
+      categoryId: 'Category:c1',
     };
     let payload;
 
@@ -54,6 +55,15 @@ describe('Post mutations', () => {
       }
     });
 
+    it('should fail if no categoryId is present', async done => {
+      try {
+        await mutation(omit(input, 'categoryId'), context);
+        done(new Error('Mutation completed without asserting error.'));
+      } catch (e) {
+        done();
+      }
+    });
+
     it('should call db.insert on posts table', () => {
       dbInsert.should.have.been.calledWith(table);
     });
@@ -67,6 +77,7 @@ describe('Post mutations', () => {
         'title',
         'text',
         'authoredByUserId',
+        'listedByCategoryId',
       ]);
     });
 

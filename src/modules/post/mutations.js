@@ -1,26 +1,30 @@
 import assert from 'assert';
 import { chain, isNil } from 'lodash';
+import { stripId } from 'helpers/data';
 
 export const Create = types => ({
   name: 'CreatePost',
   inputFields: {
     title: types.String,
     text: types.String,
+    categoryId: types.ID,
   },
   outputFields: {
     changedPost: types.Post,
   },
   mutateAndGetPayload: async (
-    { title, text },
+    { title, text, categoryId },
     { db, session: { currentUserId } }
   ) => {
     assert(title, 'Posts must have a title.');
     assert(text, 'Posts must have text.');
+    assert(categoryId, 'Posts must have category Ids.');
 
     const changedPost = await db.insert('posts', {
       createdAt: new Date(),
       updatedAt: new Date(),
       authoredByUserId: currentUserId,
+      listedByCategoryId: stripId(categoryId),
       title,
       text,
     });
@@ -32,7 +36,7 @@ export const Create = types => ({
 export const Update = types => ({
   name: 'UpdatePost',
   inputFields: {
-    id: types.String,
+    id: types.ID,
     title: types.String,
     text: types.String,
   },
@@ -43,7 +47,8 @@ export const Update = types => ({
     input,
     { db, session: { currentUserId } }
   ) => {
-    const [/* type */, strippedId] = input.id.split(':');
+    const strippedId = stripId(input.id);
+
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
     assert(currentUserId === authoredByUserId, "That's not your post!");
@@ -70,16 +75,16 @@ export const Update = types => ({
 export const Delete = types => ({
   name: 'DeletePost',
   inputFields: {
-    id: types.String,
+    id: types.ID,
   },
   outputFields: {
-    deletedId: types.String,
+    deletedId: types.ID,
   },
   mutateAndGetPayload: async (
     { id },
     { db, session: { currentUserId } }
   ) => {
-    const [/* type */, strippedId] = id.split(':');
+    const strippedId = stripId(id);
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
     assert(currentUserId === authoredByUserId, "That's not your post!");

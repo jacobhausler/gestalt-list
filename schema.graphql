@@ -20,6 +20,8 @@ type User implements Node {
   followedFeed: Post @relationship(path: "=FOLLOWED=>User=AUTHORED=>")
   locale: Location @relationship(path:"<-HOSTED-")
   localFeed: Post@relationship(path:"<-HOSTED-Location=HOSTED=>User=AUTHORED=>")
+  chats: Conversation @relationship(path:"=CHATTED=>")
+
 }
 
 type Post implements Node {
@@ -29,6 +31,8 @@ type Post implements Node {
   createdAt: Date!
   updatedAt: Date!
   author: User @relationship(path: "<-AUTHORED-")
+  category: Category @relationship(path: "<-LISTED-")
+  conversations: Conversation @relationsip(path:"=REFERENCED=>")
 
 }
 
@@ -54,6 +58,17 @@ type Category implements Node {
   createdAt: Date!
   name: String! @index
   list: List @relationship(path:"<-LISTED-")
+  posts: Post @relationship(path:"=LISTED=>")
+
+}
+
+type Conversation implements Node {
+  id:ID!
+  createdAt: Date!
+  updatedAt: Date!
+  subject: String
+  refPost: Post @relationship(path:"<-REFERENCED-")
+  users: User @relationship(path: "<=CHATTED=")
 
 }
 
