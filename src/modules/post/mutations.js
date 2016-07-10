@@ -7,7 +7,7 @@ export const Create = types => ({
   inputFields: {
     title: types.String,
     text: types.String,
-    categoryId: types.String,
+    categoryId: types.ID,
   },
   outputFields: {
     changedPost: types.Post,
@@ -36,7 +36,7 @@ export const Create = types => ({
 export const Update = types => ({
   name: 'UpdatePost',
   inputFields: {
-    id: types.String,
+    id: types.ID,
     title: types.String,
     text: types.String,
   },
@@ -75,10 +75,10 @@ export const Update = types => ({
 export const Delete = types => ({
   name: 'DeletePost',
   inputFields: {
-    id: types.String,
+    id: types.ID,
   },
   outputFields: {
-    deletedId: types.String,
+    deletedId: types.ID,
   },
   mutateAndGetPayload: async (
     { id },
