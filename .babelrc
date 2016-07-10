@@ -6,7 +6,7 @@
   "env": {
     "migrate": {
       "plugins": [
-        [ "babel-plugin-webpack-alias", { "config": "./config/webpack/dev.js" } ]
+        ["babel-plugin-webpack-alias", { "config": "./config/webpack/dev.js" }]
       ]
     }
   }

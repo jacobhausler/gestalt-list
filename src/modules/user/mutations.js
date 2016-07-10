@@ -52,7 +52,7 @@ export const SignOut = types => ({
 export const SignUp = types => ({
   name: 'SignUp',
   inputFields: {
-    userId: types.Id,
+    userId: types.ID,
     email: types.String,
     password: types.String,
     firstName: types.String,
@@ -114,7 +114,7 @@ export const Follow = types => ({
 export const Unfollow = types => ({
   name: 'UnfollowUser',
   inputFields: {
-    userIdId: types.ID,
+    userId: types.ID,
     follow: types.Boolean,
   },
   outputFields: {
