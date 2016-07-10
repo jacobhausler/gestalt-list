@@ -2,7 +2,7 @@ import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
 import uuid from 'uuid-js';
 import { chain, isUndefined, isNull } from 'lodash';
-import { stripId } from 'helpers/data/';
+import { stripId } from 'helpers/data';
 
 export const SignIn = types => ({
   name: 'SignIn',
