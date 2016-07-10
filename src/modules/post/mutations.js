@@ -6,21 +6,26 @@ export const Create = types => ({
   inputFields: {
     title: types.String,
     text: types.String,
+    categoryId: types.Category,
   },
   outputFields: {
     changedPost: types.Post,
   },
   mutateAndGetPayload: async (
-    { title, text },
+    { title, text, categoryId },
     { db, session: { currentUserId } }
   ) => {
     assert(title, 'Posts must have a title.');
     assert(text, 'Posts must have text.');
+    assert(categoryId, 'Posts must have category Ids.')
+
+    const [/* type */, strippedCategoryId] = input.id.split(':');
 
     const changedPost = await db.insert('posts', {
       createdAt: new Date(),
       updatedAt: new Date(),
       authoredByUserId: currentUserId,
+      listedByCategoryId: strippedCategoryId,
       title,
       text,
     });
@@ -44,6 +49,7 @@ export const Update = types => ({
     { db, session: { currentUserId } }
   ) => {
     const [/* type */, strippedId] = input.id.split(':');
+
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
     assert(currentUserId === authoredByUserId, "That's not your post!");

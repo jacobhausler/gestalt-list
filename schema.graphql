@@ -29,6 +29,7 @@ type Post implements Node {
   createdAt: Date!
   updatedAt: Date!
   author: User @relationship(path: "<-AUTHORED-")
+  category: Category @relationship(path: "<-LISTED-")
 
 }
 
@@ -54,6 +55,7 @@ type Category implements Node {
   createdAt: Date!
   name: String! @index
   list: List @relationship(path:"<-LISTED-")
+  posts: Post @relationship(path:"=LISTED=>")
 
 }
 
