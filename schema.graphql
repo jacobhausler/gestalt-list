@@ -21,6 +21,7 @@ type User implements Node {
   locale: Location @relationship(path:"<-HOSTED-")
   localFeed: Post@relationship(path:"<-HOSTED-Location=HOSTED=>User=AUTHORED=>")
   chats: Conversation @relationship(path:"=CHATTED=>")
+  messages: Message @relationship(path:"=AUTHORED=>")
 
 }
 
@@ -69,6 +70,16 @@ type Conversation implements Node {
   subject: String
   refPost: Post @relationship(path:"<-REFERENCED-")
   users: User @relationship(path: "<=CHATTED=")
+  messages: Message @relationship(path:"=HELD=>")
+
+}
+
+type Message implements Node {
+  id:ID!
+  createdAt: Date!
+  body: String!
+  author: User @relationship(path:"<-AUTHORED-")
+  chat: Conversation @relationship(path:"<-HELD-")
 
 }
 
