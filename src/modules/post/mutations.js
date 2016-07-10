@@ -17,9 +17,9 @@ export const Create = types => ({
   ) => {
     assert(title, 'Posts must have a title.');
     assert(text, 'Posts must have text.');
-    assert(categoryId, 'Posts must have category Ids.')
+    assert(categoryId, 'Posts must have category Ids.');
 
-    const [/* type */, strippedCategoryId] = input.id.split(':');
+    const [/* type */, strippedCategoryId] = categoryId.split(':');
 
     const changedPost = await db.insert('posts', {
       createdAt: new Date(),
