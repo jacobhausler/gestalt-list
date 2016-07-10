@@ -7,7 +7,7 @@ export const Create = types => ({
   inputFields: {
     title: types.String,
     text: types.String,
-    categoryId: types.Category,
+    categoryId: types.String,
   },
   outputFields: {
     changedPost: types.Post,
