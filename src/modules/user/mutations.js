@@ -2,6 +2,7 @@ import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
 import uuid from 'uuid-js';
 import { chain, isUndefined, isNull } from 'lodash';
+import { stripId } from 'helpers/data'
 
 export const SignIn = types => ({
   name: 'SignIn',
@@ -123,7 +124,7 @@ export const Unfollow = types => ({
   mutateAndGetPayload: async (input, context) => {
     const { db, session } = context;
     const { currentUserId } = session;
-    const followedUserId = input.userId.split(':')[1];
+    const followedUserId = stripId(input.userId);
 
     await db.deleteBy(
       'user_followed_users',
@@ -155,7 +156,7 @@ export const Update = types => ({
     let hostedByLocationId = null;
 
     if (typeof inputs.locationId !== 'undefined' && inputs.locationId) {
-      inputs.locationId = inputs.locationId.split(':')[1];
+      inputs.locationId = stripId(inputs.locationId);
       hostedByLocationId = inputs.locationId;
     }
 

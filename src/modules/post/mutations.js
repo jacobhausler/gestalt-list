@@ -1,5 +1,6 @@
 import assert from 'assert';
 import { chain, isNil } from 'lodash';
+import { stripId } from 'helpers/data';
 
 export const Create = types => ({
   name: 'CreatePost',
@@ -19,13 +20,11 @@ export const Create = types => ({
     assert(text, 'Posts must have text.');
     assert(categoryId, 'Posts must have category Ids.');
 
-    const [/* type */, strippedCategoryId] = categoryId.split(':');
-
     const changedPost = await db.insert('posts', {
       createdAt: new Date(),
       updatedAt: new Date(),
       authoredByUserId: currentUserId,
-      listedByCategoryId: strippedCategoryId,
+      listedByCategoryId: stripId(categoryId),
       title,
       text,
     });
@@ -48,7 +47,7 @@ export const Update = types => ({
     input,
     { db, session: { currentUserId } }
   ) => {
-    const [/* type */, strippedId] = input.id.split(':');
+    const strippedId = stripId(input.id);
 
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
@@ -85,7 +84,7 @@ export const Delete = types => ({
     { id },
     { db, session: { currentUserId } }
   ) => {
-    const [/* type */, strippedId] = id.split(':');
+    const strippedId = stripId(id);
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
     assert(currentUserId === authoredByUserId, "That's not your post!");
