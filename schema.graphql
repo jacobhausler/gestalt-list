@@ -77,7 +77,7 @@ type Conversation implements Node {
 type Message implements Node {
   id:ID!
   createdAt: Date!
-  body: String!
+  body: String
   author: User @relationship(path:"<-AUTHORED-")
   chat: Conversation @relationship(path:"<-HELD-")
 
