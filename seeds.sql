@@ -1,17 +1,22 @@
-INSERT INTO users (id, email, password_hash, first_name, last_name)
+INSERT INTO locations (id, created_at, name)
 VALUES
-  ('00000000-0000-0000-0000-000000000001', 'test1@test.com', 'Sigmund', 'Freud'),
-  ('00000000-0000-0000-0000-000000000002', 'test2@test.com', 'Ivan', 'Pavlov'),
-  ('00000000-0000-0000-0000-000000000003', 'test3@test.com', 'Carl', 'Jung');
+  ('00000000-0000-0000-0000-000000000001', now() - interval '2 hours', 'Dallas'),
+  ('00000000-0000-0000-0000-000000000002', now() - interval '1 hours', 'North Dallas'),
+  ('00000000-0000-0000-0000-000000000003', now() - interval '30 minutes', 'South Dallas');
 
-INSERT INTO user_followed_users (user_id, followed_user_id)
+INSERT INTO lists (id, created_at, name, owned_by_location_id)
 VALUES
-  ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000002'),
-  ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000003'),
-  ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001');
-  ('00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000002');
+  ('00000000-0000-0000-0000-000000000001', now() - interval '30 minutes', 'Breads','00000000-0000-0000-0000-000000000001'),
+  ('00000000-0000-0000-0000-000000000002', now() - interval '30 minutes', 'Breads','00000000-0000-0000-0000-000000000002'),
+  ('00000000-0000-0000-0000-000000000003', now() - interval '30 minutes', 'Breads','00000000-0000-0000-0000-000000000003');
+  ('00000000-0000-0000-0000-000000000004', now() - interval '30 minutes', 'Butters','00000000-0000-0000-0000-000000000001'),
+  ('00000000-0000-0000-0000-000000000005', now() - interval '30 minutes', 'Butters','00000000-0000-0000-0000-000000000002'),
+  ('00000000-0000-0000-0000-000000000006', now() - interval '30 minutes', 'Butters','00000000-0000-0000-0000-000000000003');
+  ('00000000-0000-0000-0000-000000000007', now() - interval '30 minutes', 'Salts','00000000-0000-0000-0000-000000000001'),
+  ('00000000-0000-0000-0000-000000000008', now() - interval '30 minutes', 'Salts','00000000-0000-0000-0000-000000000002'),
+  ('00000000-0000-0000-0000-000000000009', now() - interval '30 minutes', 'Salts','00000000-0000-0000-0000-000000000003');
 
-INSERT INTO posts (id, title, text, created_at, authored_by_user_id)
+INSERT INTO categories (id, created_at, name, listed_by_list_id)
 VALUES
   ('00000000-0000-0000-0000-000000000004', 'Jerks..', 'Civilization began the first time an angry person cast a word instead of a rock.', now() + interval '1 hour', '00000000-0000-0000-0000-000000000001'),
   ('00000000-0000-0000-0000-000000000005', 'Someday I will figure out what updog is', 'Dont become a mere recorder of facts, but try to penetrate the mystery of their origin.', now() + interval '2 hours', '00000000-0000-0000-0000-000000000002'),
