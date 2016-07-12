@@ -33,7 +33,7 @@ type Post implements Node {
   updatedAt: Date!
   author: User @relationship(path: "<-AUTHORED-")
   category: Category @relationship(path: "<-LISTED-")
-  conversations: Conversation @relationsip(path:"=REFERENCED=>")
+  conversations: Conversation @relationsip(path:"<=REFERENCED=")
 
 }
 
@@ -68,7 +68,7 @@ type Conversation implements Node {
   createdAt: Date!
   updatedAt: Date!
   subject: String
-  refPost: Post @relationship(path:"<-REFERENCED-")
+  refPost: Post @relationship(path:"-REFERENCED->")
   users: User @relationship(path: "<=CHATTED=")
   messages: Message @relationship(path:"=HELD=>")
 

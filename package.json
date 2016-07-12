@@ -29,6 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt-as-promised": "^1.1.0",
+    "casual": "^1.5.3",
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "gestalt-postgres": "^0.0.17",
