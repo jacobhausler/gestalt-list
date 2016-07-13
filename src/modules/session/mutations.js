@@ -15,8 +15,8 @@ export const Seed = types => ({
   ) => {
     casual.seed(seed);
 
-    times(5, () => {
-      return db.insert(
+    times(5, () =>
+      db.insert(
         'Locations',
         {
           createdAt: new Date(),
@@ -24,25 +24,28 @@ export const Seed = types => ({
         }
         ).then(location => {
           const locId = location.id;
-          return db.insert(
+          return times(8, () => db.insert(
             'Lists',
             {
               createdAt: new Date(),
               name: casual.title,
               ownedByLocationId: locId,
             }
-        ).then((list) => {
-          const listId = list.id;
-          return db.insert(
-            'Categories',
-            {
-              createdAt: new Date(),
-              name: casual.title,
-              listedByListId: listId,
-            });
-        });
-        });
-    });
+          )).then((lists) => {
+            for (const list of lists) {
+              const listId = list.id;
+              times(casual.integer(4, 12), () => db.insert(
+                'Categories',
+                {
+                  createdAt: new Date(),
+                  name: casual.title,
+                  listedByListId: listId,
+                }
+              ));
+            }
+          });
+        })
+    );
 
     return { successString: 'Yay check the db' };
   },
