@@ -60,7 +60,6 @@ const config = {
   },
   eslint: {
     configFile: path.join(__root, 'config/eslint/.dev.rc'),
-    failOnError: true,
   },
 };
 
@@ -82,7 +81,17 @@ if (env === 'development') {
 // }
 
 if (process.env.TRAVIS) {
-  config.eslint.failOnError = true;
+  config.plugins.push(function () {
+    this.plugin('done', stats => {
+      if (stats.compilation.errors && stats.compilation.errors.length) {
+        console.log('Found following error(s):');
+        stats.compilation.errors.forEach(function(theError) {
+            console.log(theError.error);
+        });
+        process.exit(1);
+      }
+    });
+  });
 }
 
 module.exports = config;
