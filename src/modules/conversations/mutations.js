@@ -40,15 +40,15 @@ export const Start = types => ({
     );
 
     // add both users to the conversation
-    const addedCurrentUser = await.db.insert(
-      'user_chatted_conversations',
+    const addedCurrentUser = await db.insert(
+      'userChattedConversations',
       {
         userId: currentUserId,
         chattedConversationId: changedConversation.id,
       }
     );
-    const addedToUser = await.db.insert(
-      'user_chatted_conversations',
+    const addedToUser = await db.insert(
+      'userChattedConversations',
       {
         userId: currentUserId,
         chattedConversationId: changedConversation.id,
