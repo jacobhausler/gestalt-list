@@ -60,6 +60,7 @@ const config = {
   },
   eslint: {
     configFile: path.join(__root, 'config/eslint/.dev.rc'),
+    failOnError: true,
   },
 };
 
