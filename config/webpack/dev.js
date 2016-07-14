@@ -59,7 +59,7 @@ const config = {
     }
   },
   eslint: {
-    configFile: path.join(__root, 'config/eslint/.dev.rc')
+    configFile: path.join(__root, 'config/eslint/.dev.rc'),
   },
 };
 
@@ -79,5 +79,9 @@ if (env === 'development') {
 // if (env === 'development' && !argv.no_type_check) {
 //   config.plugins.push(new FlowStatusWebpackPlugin());
 // }
+
+if (process.env.TRAVIS) {
+  config.eslint.failOnError = true;
+}
 
 module.exports = config;
