@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { stripId } from 'helpers/data';
-import { isNil, chain } from 'lodash';
+import { isNil, omitBy } from 'lodash';
 
 export const Start = types => ({
   name: 'StartConversation',
@@ -23,16 +23,17 @@ export const Start = types => ({
     const toUser = await db.findBy('users', { id: stripId(toUserId) });
     // if refPostId has a value, this will fail if the post doesn't exist
     if (!isNil(refPostId)){
-      const refPost = await db.findBy('posts', { id: stripId(refPostId) });
+      await db.findBy('posts', { id: stripId(refPostId) });
     }
 
     // create and clean the insertFields
-    const insertFields = chain({
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      referencedPostId: stripId(refPostId),
-      subject,
-    }).omitBy(isNil).value();
+    const insertFields = omitBy({
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        referencedPostId: stripId(refPostId),
+        subject,
+      },isNil
+    );
 
     const changedConversation = await db.insert(
       'conversations',
