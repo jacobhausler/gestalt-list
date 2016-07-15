@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { stripId } from 'helpers/data';
-import { isNil } from 'lodash';
+
 
 export const Send = types => ({
   name: 'SendMessage',
@@ -53,7 +53,7 @@ export const View = types => ({
     { db }
   ) => {
     // update the message
-    const [ updatedMessage ] = await db.update(
+    const [updatedMessage] = await db.update(
       'messages',
       { id: stripId(messageId) },
       { seen: true },
@@ -61,7 +61,7 @@ export const View = types => ({
     assert(updatedMessage, "Message doesn't exist!");
 
     // update the currentConversation
-    const [ changedConversation ] = await db.update(
+    const [changedConversation] = await db.update(
       'conversations',
       { id: updatedMessage.heldByConversationId },
       { updatedAt: new Date() },
