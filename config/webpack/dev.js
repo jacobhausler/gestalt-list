@@ -59,7 +59,7 @@ const config = {
     }
   },
   eslint: {
-    configFile: path.join(__root, 'config/eslint/.dev.rc')
+    configFile: path.join(__root, 'config/eslint/.dev.rc'),
   },
 };
 
@@ -79,5 +79,19 @@ if (env === 'development') {
 // if (env === 'development' && !argv.no_type_check) {
 //   config.plugins.push(new FlowStatusWebpackPlugin());
 // }
+
+if (process.env.TRAVIS) {
+  config.plugins.push(function () {
+    this.plugin('done', stats => {
+      if (stats.compilation.errors && stats.compilation.errors.length) {
+        console.log('Found following error(s):');
+        stats.compilation.errors.forEach(function(theError) {
+            console.log(theError.error);
+        });
+        process.exit(1);
+      }
+    });
+  });
+}
 
 module.exports = config;
