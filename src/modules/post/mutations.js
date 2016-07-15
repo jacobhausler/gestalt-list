@@ -67,6 +67,7 @@ export const Update = types => ({
         updatedAt: new Date(),
       },
     );
+    assert(changedPost, "Couldn't find that Post");
 
     return { changedPost };
   },

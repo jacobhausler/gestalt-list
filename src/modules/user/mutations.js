@@ -173,14 +173,12 @@ export const Update = types => ({
       updatedAt: new Date(),
     };
 
-    const returnUser = await db.update(
+    const [changedUser] = await db.update(
       'users',
       { id: currentUserId },
       updates,
     );
-    assert(!isNil(returnUser), "Didn't find that user.");
-
-    const changedUser = returnUser[0];
+    assert(!isNil(changedUser), "Didn't find that user.");
 
     return { changedUser };
   },

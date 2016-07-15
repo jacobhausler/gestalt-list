@@ -53,23 +53,20 @@ export const View = types => ({
     { db }
   ) => {
     // update the message
-    const updatedMessage = await db.update(
+    const [ updatedMessage ] = await db.update(
       'messages',
       { id: stripId(messageId) },
       { seen: true },
     );
-    assert(!isNil(updatedMessage), "Message doesn't exist!");
+    assert(updatedMessage, "Message doesn't exist!");
 
     // update the currentConversation
-    const conversation = await db.update(
+    const [ changedConversation ] = await db.update(
       'conversations',
-      { id: updatedMessage[0].heldByConversationId },
+      { id: updatedMessage.heldByConversationId },
       { updatedAt: new Date() },
     );
-    assert(!isNil(conversation), "Conversation doesn't exist!");
-    console.log(conversation);
-
-    const changedConversation = conversation[0];
+    assert(changedConversation, "Conversation doesn't exist!");
 
     return { changedConversation };
   },
