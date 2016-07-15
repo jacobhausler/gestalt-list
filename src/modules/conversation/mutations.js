@@ -20,20 +20,19 @@ export const Start = types => ({
     assert(toUserId, 'Conversations must have a toUserId');
 
     // will fail if toUser doesn't exist
-    const toUser = await db.findBy('users', { id: stripId(toUserId) });
+    await db.findBy('users', { id: stripId(toUserId) });
     // if refPostId has a value, this will fail if the post doesn't exist
-    if (!isNil(refPostId)){
+    if (!isNil(refPostId)) {
       await db.findBy('posts', { id: stripId(refPostId) });
     }
 
     // create and clean the insertFields
     const insertFields = omitBy({
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        referencedPostId: stripId(refPostId),
-        subject,
-      },isNil
-    );
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      referencedPostId: stripId(refPostId),
+      subject,
+    }, isNil);
 
     const changedConversation = await db.insert(
       'conversations',
@@ -41,14 +40,14 @@ export const Start = types => ({
     );
 
     // add both users to the conversation
-    const addedCurrentUser = await db.insert(
+    await db.insert(
       'userChattedConversations',
       {
         userId: currentUserId,
         chattedConversationId: changedConversation.id,
       }
     );
-    const addedToUser = await db.insert(
+    await db.insert(
       'userChattedConversations',
       {
         userId: currentUserId,

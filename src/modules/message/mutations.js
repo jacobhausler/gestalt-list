@@ -8,14 +8,14 @@ export const Send = types => ({
     body: types.String,
   },
   outputFields: {
-    changedMessage: types.Message,
+    changedConversation: types.Conversation,
   },
   mutateAndGetPayload: async (
-    { chatId, body },
+    { conversationId, body },
     { db, session: { currentUserId } }
   ) => {
     assert(body, 'Messages must have bodies');
-    assert(chatId, 'Messages must have a ChaatId!');
+    assert(conversationId, 'Messages must have a ChaatId!');
     assert(currentUserId, 'You must be logged in!');
 
     // updates updatedAAt on the convo or fails if convo doesn't exist
@@ -24,14 +24,14 @@ export const Send = types => ({
       { id: stripId(conversationId) },
       { updatedAt: new Date() },
     );
-
-    const changedMessage = await db.insert('messages', {
+    // fails if the db call fails
+    await db.insert('messages', {
       createdAt: new Date(),
       authoredByUserId: currentUserId,
       heldByConversationId: stripId(conversationId),
       body,
     });
 
-    return { changedMessage };
+    return { currentConversation };
   },
 });
