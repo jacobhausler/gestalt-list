@@ -178,7 +178,7 @@ export const Update = types => ({
       { id: currentUserId },
       updates,
     );
-    assert(!isNil(changedUser), "Didn't find that user.");
+    assert(changedUser, "Didn't find that user.");
 
     return { changedUser };
   },
