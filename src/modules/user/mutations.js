@@ -1,7 +1,7 @@
 import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
 import uuid from 'uuid-js';
-import { chain, isUndefined, isNull } from 'lodash';
+import { chain, isUndefined, isNil } from 'lodash';
 import { stripId } from 'helpers/data';
 
 export const SignIn = types => ({
@@ -165,7 +165,7 @@ export const Update = types => ({
       .omit('locationId')
       .merge({ hostedByLocationId })
       .omitBy(isUndefined)
-      .omitBy(isNull)
+      .omitBy(isNil)
       .value();
 
     const updates = {
