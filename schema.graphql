@@ -22,7 +22,6 @@ type User implements Node {
   localFeed: Post@relationship(path:"<-HOSTED-Location=HOSTED=>User=AUTHORED=>")
   chats: Conversation @relationship(path:"=CHATTED=>")
   messages: Message @relationship(path:"=AUTHORED=>")
-
 }
 
 type Post implements Node {
@@ -31,10 +30,10 @@ type Post implements Node {
   text: String!
   createdAt: Date!
   updatedAt: Date!
-  author: User @relationship(path: "<-AUTHORED-")
+  author: User! @relationship(path: "<-AUTHORED-")
   category: Category @relationship(path: "<-LISTED-")
   conversations: Conversation @relationsip(path:"<=REFERENCED=")
-
+  price: Float
 }
 
 type Location implements Node {
@@ -43,7 +42,6 @@ type Location implements Node {
   name:String! @index @unique
   users: User @relationship(path:"=HOSTED=>")
   lists: List @relationship(path:"=OWNED=>")
-
 }
 
 type List implements Node {
@@ -60,7 +58,6 @@ type Category implements Node {
   name: String! @index
   list: List @relationship(path:"<-LISTED-")
   posts: Post @relationship(path:"=LISTED=>")
-
 }
 
 type Conversation implements Node {
@@ -71,7 +68,6 @@ type Conversation implements Node {
   refPost: Post @relationship(path:"-REFERENCED->")
   users: User @relationship(path: "<=CHATTED=")
   messages: Message @relationship(path:"=HELD=>")
-
 }
 
 type Message implements Node {
@@ -79,9 +75,8 @@ type Message implements Node {
   createdAt: Date!
   seen: Boolean!
   body: String
-  author: User @relationship(path:"<-AUTHORED-")
+  author: User! @relationship(path:"<-AUTHORED-")
   chat: Conversation @relationship(path:"<-HELD-")
-
 }
 
 
