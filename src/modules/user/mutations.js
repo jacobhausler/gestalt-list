@@ -1,7 +1,7 @@
 import assert from 'assert';
 import bcrypt from 'bcrypt-as-promised';
 import uuid from 'uuid-js';
-import { chain, isUndefined, isNull } from 'lodash';
+import { chain, isUndefined, isNil } from 'lodash';
 import { stripId } from 'helpers/data';
 
 export const SignIn = types => ({
@@ -165,7 +165,7 @@ export const Update = types => ({
       .omit('locationId')
       .merge({ hostedByLocationId })
       .omitBy(isUndefined)
-      .omitBy(isNull)
+      .omitBy(isNil)
       .value();
 
     const updates = {
@@ -173,14 +173,12 @@ export const Update = types => ({
       updatedAt: new Date(),
     };
 
-    // the update method returns an array of updated rows
-    const returnUser = await db.update(
+    const [changedUser] = await db.update(
       'users',
       { id: currentUserId },
       updates,
     );
-
-    const changedUser = returnUser[0];
+    assert(changedUser, "Didn't find that user.");
 
     return { changedUser };
   },
