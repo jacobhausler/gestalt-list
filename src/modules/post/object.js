@@ -7,11 +7,7 @@ export default {
         starredPostId: id,
       });
 
-      const stars = star.length;
-
-      console.log(star);
-
-      return stars;
+      return { starCount: star.length };
     },
   },
 };

@@ -35,7 +35,7 @@ type Post implements Node {
   category: Category @relationship(path: "<-LISTED-")
   conversations: Conversation @relationsip(path:"<=REFERENCED=")
   price: Float
-  stars: Int @virtual
+  starCount: Int @virtual
   starredBy: User @relationship(path: "<=STARRED=")
 }
 

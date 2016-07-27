@@ -116,8 +116,6 @@ export const Star = types => ({
     assert(postId, 'Must provide a post ID!');
     assert(isBoolean(toggle), 'Must provide true or false in toggle');
 
-    let starredOrNot = true;
-
     if (toggle) {
       await db.insert('user_starred_posts', {
         userId: currentUserId,
@@ -131,11 +129,9 @@ export const Star = types => ({
           starredPostId: stripId(postId),
         }
       );
-
-      starredOrNot = false;
     }
 
-    return { starredOrNot };
+    return { starredOrNot: toggle };
   },
 });
 
