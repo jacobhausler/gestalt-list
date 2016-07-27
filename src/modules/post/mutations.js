@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { chain, isNil } from 'lodash';
+import { chain, isNil, isBoolean } from 'lodash';
 import { stripId } from 'helpers/data';
 
 export const Create = types => ({
@@ -51,7 +51,7 @@ export const Update = types => ({
 
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
-    assert(currentUserId === authoredByUserId, "That's not your post!");
+    assert(currentUserId === authoredByUserId, 'That is not your post!');
 
     const changedFields = chain(input)
       .omit(['id', 'clientMutationId'])
@@ -67,7 +67,7 @@ export const Update = types => ({
         updatedAt: new Date(),
       },
     );
-    assert(changedPost, "Couldn't find that Post");
+    assert(changedPost, 'Unable to find that Post');
 
     return { changedPost };
   },
@@ -88,7 +88,7 @@ export const Delete = types => ({
     const strippedId = stripId(id);
     const { authoredByUserId } = await db.findBy('posts', { id: strippedId });
 
-    assert(currentUserId === authoredByUserId, "That's not your post!");
+    assert(currentUserId === authoredByUserId, 'That is not your post!');
 
     await db.deleteBy(
       'posts',
@@ -98,3 +98,40 @@ export const Delete = types => ({
     return { deletedId: strippedId };
   },
 });
+
+export const Star = types => ({
+  name: 'ToggleStarPost',
+  inputFields: {
+    postId: types.ID,
+    toggle: types.Boolean,
+  },
+  outputFields: {
+    starredOrNot: types.Boolean,
+  },
+  mutateAndGetPayload: async (
+    { postId, toggle },
+    { db, session: { currentUserId } }
+  ) => {
+    assert(!isNil(currentUserId), 'Must be logged in to star posts!');
+    assert(postId, 'Must provide a post ID!');
+    assert(isBoolean(toggle), 'Must provide true or false in toggle');
+
+    if (toggle) {
+      await db.insert('user_starred_posts', {
+        userId: currentUserId,
+        starredPostId: stripId(postId),
+      });
+    } else {
+      await db.deleteBy(
+        'user_starred_posts',
+        {
+          userId: currentUserId,
+          starredPostId: stripId(postId),
+        }
+      );
+    }
+
+    return { starredOrNot: toggle };
+  },
+});
+
