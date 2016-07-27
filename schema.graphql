@@ -22,6 +22,7 @@ type User implements Node {
   localFeed: Post@relationship(path:"<-HOSTED-Location=HOSTED=>User=AUTHORED=>")
   chats: Conversation @relationship(path:"=CHATTED=>")
   messages: Message @relationship(path:"=AUTHORED=>")
+  starredPosts: Post @relationship(path: "=STARRED=>")
 }
 
 type Post implements Node {
@@ -34,6 +35,8 @@ type Post implements Node {
   category: Category @relationship(path: "<-LISTED-")
   conversations: Conversation @relationsip(path:"<=REFERENCED=")
   price: Float
+  stars: Int @virtual
+  starredBy: User @relationship(path: "<=STARRED=")
 }
 
 type Location implements Node {
