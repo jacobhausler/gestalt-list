@@ -36,7 +36,7 @@ type Post implements Node {
   conversations: Conversation @relationsip(path:"<=REFERENCED=")
   price: Float
   starCount: Int @virtual
-  starredBy: User @relationship(path: "<=STARRED=")
+  starredBy: User @relationship(path: "<=STARRED")
 }
 
 type Location implements Node {
