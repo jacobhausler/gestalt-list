@@ -13,6 +13,7 @@ type User implements Node {
   lastName: String
   fullName: String @virtual
   profileImage(size: Int): String! @virtual
+  messageNotificationCount: Int! @virtual
   following: Boolean! @virtual
   followedUsers: User @relationship(path: "=FOLLOWED=>")
   followers: User @relationship(path: "<=FOLLOWED=")
@@ -24,7 +25,6 @@ type User implements Node {
   messages: Message @relationship(path:"=AUTHORED=>")
   starredPosts: Post @relationship(path: "=STARRED=>")
 }
-
 type Post implements Node {
   id: ID!
   title: String! @index
@@ -36,7 +36,7 @@ type Post implements Node {
   conversations: Conversation @relationsip(path:"<=REFERENCED=")
   price: Float
   starCount: Int @virtual
-  starredBy: User @relationship(path: "<=STARRED")
+  starredBy: User @relationship(path: "<=STARRED=")
 }
 
 type Location implements Node {
