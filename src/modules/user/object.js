@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import { reduce } from 'lodash';
 
 export default {
   name: 'User',
@@ -27,16 +26,16 @@ export default {
         }
       );
 
-      const messageNotificationCount = reduce(userConvos, async (count, convo) => {
-        console.log(count, convo);
-        const messageCount = await db.exec(
+      const messageNotificationCount = userConvos.reduce(async (count, convo) => {
+        const messageCountRaw = await db.exec(
           'SELECT COUNT(*) FROM messages WHERE held_by_conversation_id=$1 ' +
-          'AND authored_by_user_id!=$2 AND seen!=true;',
-          [convo.chattedConversationId, session.currentUserId],
+          'AND authored_by_user_id!=$2 AND seen=$3;',
+          [convo.chattedConversationId, session.currentUserId, false],
         );
+        const messageCount = parseInt(messageCountRaw.rows[0].count, 10);
 
         return count + messageCount;
-      });
+      }, 0);
 
       return messageNotificationCount;
     },
