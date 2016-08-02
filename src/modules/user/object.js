@@ -19,5 +19,26 @@ export default {
       });
       return follows.length > 0;
     },
+    messageNotificationCount: async ({ id }, args, { db, session }) => {
+      const userConvos = await db.queryBy('user_chatted_conversations',
+        {
+          userId: session.currentUserId,
+        }
+      );
+
+      const messageNotificationCount = userConvos.reduce(async (count, convo) => {
+        const messageCountRaw = await db.exec(
+          'SELECT COUNT(*) FROM messages WHERE held_by_conversation_id=$1 ' +
+          'AND authored_by_user_id!=$2 AND seen=$3;',
+          [convo.chattedConversationId, session.currentUserId, false],
+        );
+        const messageCount = parseInt(messageCountRaw.rows[0].count, 10);
+
+        return count + messageCount;
+      }, 0);
+
+      return messageNotificationCount;
+    },
   },
 };
+
